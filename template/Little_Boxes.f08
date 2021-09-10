@@ -21,7 +21,7 @@ program main
     real (kind=8), parameter :: pi = 3.14159265358979323846d0 
     real (kind=8), parameter :: phase = 0.0d0
     real (kind=8), parameter :: gammaL = 0.5d0 
-    real (kind=8), parameter :: gammaR = 0.5d0 
+    real (kind=8), parameter :: gammaR = 0.5d0
     real (kind=8), parameter :: Omega = 10.0d0 * pi 
     real (kind=8), parameter :: dt = 0.001d0 
     integer (kind=8), parameter :: period = 5d0 
