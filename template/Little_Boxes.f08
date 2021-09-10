@@ -17,7 +17,7 @@ program main
     integer (kind=8), parameter :: N = 20d0 
     integer (kind=8), parameter :: end_time = 7d0 
     integer (kind=8), parameter :: time_steps = 7000d0 
-    integer (kind=8), parameter :: num_of_simulations = 25000d0 
+    integer (kind=8), parameter :: num_of_simulations = 25000d0
     real (kind=8), parameter :: pi = 3.14159265358979323846d0 
     real (kind=8), parameter :: phase = 0.0d0
     real (kind=8), parameter :: gammaL = 0.5d0 
