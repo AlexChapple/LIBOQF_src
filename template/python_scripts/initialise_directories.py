@@ -11,7 +11,6 @@ num_of_dirs = 50
 os.mkdir("data")
 
 # Make other folders 
-os.mkdir("figures")
 os.mkdir("summary")
 os.mkdir("slurm_folder")
 
@@ -28,8 +27,10 @@ for i in range(num_of_dirs):
 
     # make empty files for writing in each directory 
     open(working_dir + "log.txt", "a+").close()
+    open(working_dir + "input.txt", "a+").close()
     open(working_dir + "spin_down.txt", "a+").close()
     open(working_dir + "spin_up.txt", "a+").close()
     open(working_dir + "photon_counting.txt", "a+").close()
+    open(working_dir + "waiting_time.txt", "a+").close()
     
 

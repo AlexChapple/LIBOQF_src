@@ -6,7 +6,7 @@
 
 # Compile the Fortran code (First load the correct module)
 module load gimkl/2020a
-gfortran Little_Boxes2.f08 -o LIBOQF
+gfortran Little_Boxes.f08 -o LIBOQF
 
 # Initialise the directories
 module load Python

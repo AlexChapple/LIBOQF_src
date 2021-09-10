@@ -17,7 +17,7 @@ program main
     integer (kind=8), parameter :: N = 20d0 
     integer (kind=8), parameter :: end_time = 7d0 
     integer (kind=8), parameter :: time_steps = 7000d0 
-    integer (kind=8), parameter :: num_of_simulations = 25000d0
+    integer (kind=8), parameter :: num_of_simulations = 2000d0
     real (kind=8), parameter :: pi = 3.14159265358979323846d0 
     real (kind=8), parameter :: phase = 0.0d0
     real (kind=8), parameter :: gammaL = 0.5d0 
@@ -54,13 +54,6 @@ program main
     real (kind=8), dimension(waiting_time_step) :: reduced_time_list  
     integer (kind=8) :: first_photon, floored_multiple
     integer (kind=8), parameter :: print_to_console = 0
-
-    ! Saving output variables NOT DONE
-    character :: saving_dir
-    character :: spin_down_file 
-    character :: spin_up_file 
-    character :: photon_counting_file 
-    character :: waiting_time_file 
 
     ! -------------------------------------------------------------------
     !
@@ -434,7 +427,7 @@ program main
         write(4,*) reduced_time_list(index), waiting_time_list(index)
     end do 
 
-    close(1); close(2); close(3)
+    close(1); close(2); close(3); close(4)
     
     call system_clock(end)
 
@@ -523,6 +516,24 @@ program main
         print *, "tau: ", tau 
         print *, "period: ", period 
         print *, "Delta t: ", tau / N 
+
+        ! Also will write this to an input.txt file 
+        open(5, file="input.txt", status="replace")
+
+        write (5,*) "Number of Boxes: ", N 
+        write (5,*) "simulation duration: ", end_time 
+        write (5,*) "time steps: ", time_steps
+        write (5,*) "number of simulations: ", num_of_simulations
+        write (5,*) "phase: ", phase 
+        write (5,*) "gammaL: ", gammaL 
+        write (5,*) "gammaR: ", gammaR 
+        write (5,*) "Omega: ", real(Omega)
+        write (5,*) "dt: ", dt 
+        write (5,*) "tau: ", tau 
+        write (5,*) "period: ", period 
+        write (5,*) "Delta t: ", tau / N 
+
+        close(5)
 
     end subroutine
 
