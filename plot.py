@@ -11,7 +11,7 @@ initialised = 0
 photon_list = []
 time_list = []
 
-directory = "results/Omega_10_tau_01_phi_0"
+directory = "results/Omega_10_tau_01_phi_pi"
 
 photon_data = np.loadtxt(directory + "/photon_counting_total.txt")
 spin_down_data_total = np.loadtxt(directory + "/spin_up_total.txt", delimiter=",")
@@ -20,7 +20,7 @@ time_list = spin_down_data_total[:,0]
 spin_down_data = spin_down_data_total[:,1]
 
 x = x_list = [i for i in range(0,40)]
-spin_down_data = [i / num_of_dir for i in spin_down_data]
+spin_down_data = [i * num_of_dir for i in spin_down_data]
 
 # matplotlib.rcParams.update({'font.size': 40})
 # px = 1/plt.rcParams['figure.dpi']

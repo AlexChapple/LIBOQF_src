@@ -3,7 +3,7 @@ import numpy as np
 from math import floor
 from math import factorial
 
-waiting_time_data = np.loadtxt("waiting_time.txt")
+waiting_time_data = np.loadtxt("results/Omega_10_tau_01_phi_pi/waiting_time_total.txt", delimiter=",")
 
 waiting_time = waiting_time_data[:,0]
 waiting_time_hist = waiting_time_data[:,1]
@@ -27,7 +27,7 @@ plt.bar(waiting_time_first, waiting_time_hist_first, width=0.01)
 
 
 # Stuff after 0.2 seconds
-end_time = 7 
+end_time = 14
 tau = 0.1 
 waiting_time_last = waiting_time[11:-1]
 waiting_time_hist_last = waiting_time_hist[11:-1]

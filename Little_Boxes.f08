@@ -15,11 +15,11 @@ program main
     ! Declare general variables and parameters
     real (kind=8) :: start_time = 0.0d0 
     integer (kind=8), parameter :: N = 20d0 
-    integer (kind=8), parameter :: end_time = 7d0 
-    integer (kind=8), parameter :: time_steps = 7000d0 
-    integer (kind=8), parameter :: num_of_simulations = 2000d0
+    integer (kind=8), parameter :: end_time = 14d0 
+    integer (kind=8), parameter :: time_steps = 14000d0 
+    integer (kind=8), parameter :: num_of_simulations = 100d0
     real (kind=8), parameter :: pi = 3.14159265358979323846d0 
-    real (kind=8), parameter :: phase = 0.0d0
+    real (kind=8), parameter :: phase = pi !0.0d0
     real (kind=8), parameter :: gammaL = 0.5d0 
     real (kind=8), parameter :: gammaR = 0.5d0
     real (kind=8), parameter :: Omega = 10.0d0 * pi 
@@ -48,7 +48,7 @@ program main
 
     ! Waiting time variables 
     real (kind=8), parameter :: waiting_bin_width = tau / 10.0d0
-    integer (kind=8), parameter :: waiting_time_step = 700 ! Needs to be manually calculated (end_time / waiting_bin_width)
+    integer (kind=8), parameter :: waiting_time_step = 1400 ! Needs to be manually calculated (end_time / waiting_bin_width)
     real (kind=8) :: waiting_time, last_time_found
     integer (kind=8), dimension(waiting_time_step) :: waiting_time_list
     real (kind=8), dimension(waiting_time_step) :: reduced_time_list  
