@@ -1,52 +1,104 @@
-import os 
-import matplotlib.pyplot as plt
-import matplotlib
+# --------------------------------------------------------------------------------------------------------------------
+#
+#   Plotting script that plots 
+#
+# --------------------------------------------------------------------------------------------------------------------
+
+import matplotlib.pyplot as plt 
 import numpy as np 
-# matplotlib.use('Agg')
+from math import floor
 
-# Parameters
-num_of_dir = 50
+# Variables 
+directory = "results/Omega_10_tau_02_phi_pi/"
+photon_bin_cut_off = 40 
+end_time = 100 
+tau = 0.2
+waiting_bar_count = 30 
 
-initialised = 0
-photon_list = []
-time_list = []
+# If plotting test files in direct directory set true 
+local = True
+if local == False:
+    spin_down_file = "spin_down_total.txt"
+    spin_up_file = "spin_up_total.txt"
+    photon_counting_file = "photon_counting_total.txt"
+    waiting_time_file = "waiting_time_total.txt"
+    delimeter = ","
+else:
+    directory = "./"
+    spin_down_file = "spin_down.txt"
+    spin_up_file = "spin_up.txt"
+    photon_counting_file = "photon_counting.txt"
+    waiting_time_file = "waiting_time.txt"
+    delimeter = None 
 
-directory = "results/Omega_10_tau_01_phi_pi"
+# Import data 
+spin_down_data = np.loadtxt(directory + spin_down_file, delimiter=delimeter)
+spin_up_data = np.loadtxt(directory + spin_up_file, delimiter=delimeter)
+photon_data = np.loadtxt(directory + photon_counting_file)
+waiting_data = np.loadtxt(directory + waiting_time_file, delimiter=delimeter)
 
-photon_data = np.loadtxt(directory + "/photon_counting_total.txt")
-spin_down_data_total = np.loadtxt(directory + "/spin_up_total.txt", delimiter=",")
+### Spin up and down plots 
+time_list = spin_down_data[:,0]
+spin_down_data = spin_down_data[:,1]
+spin_up_data = spin_up_data[:,1]
 
-time_list = spin_down_data_total[:,0]
-spin_down_data = spin_down_data_total[:,1]
-
-x = x_list = [i for i in range(0,40)]
-spin_down_data = [i * num_of_dir for i in spin_down_data]
-
-# matplotlib.rcParams.update({'font.size': 40})
-# px = 1/plt.rcParams['figure.dpi']
-plt.figure()
-# plt.figure(figsize=(1400*1.7*px, 2*427*1.7*px))
-plt.bar(x, photon_data[0:40], color="hotpink")
-plt.xlabel("Photon Number", fontsize=22)
-plt.ylabel("frequency (a.u)", fontsize=22)
-plt.title("photon counting distribution")
-plt.xticks(np.arange(min(x), max(x)+1, 1.0))
-# plt.savefig(directory + "/photon_counting_trim.png", dpi=600)
-# plt.savefig("pcd.png", transparent=True, dpi=600)
-plt.show()
-
-px = 1/plt.rcParams['figure.dpi']
-plt.figure(figsize=(528*1.7*px, 427*1.7*px))
-plt.plot(time_list, spin_down_data, linewidth=3)
+plt.figure(1)
+plt.plot(time_list, spin_down_data, linewidth=0.5)
 plt.grid()
-plt.xlabel("Time")
-plt.ylabel("Spin down probability")
-plt.xticks(np.arange(min(time_list), max(time_list)+1, 1.0))
+plt.xlabel("Time (s)")
+plt.ylabel("Ground state probability")
+plt.xticks(np.arange(min(time_list), max(time_list)+1, 10.0))
 plt.yticks(np.arange(np.floor(np.min(spin_down_data)), np.ceil(np.max(spin_down_data)), 0.25))
+
+plt.figure(2)
+plt.plot(time_list, spin_up_data, linewidth=3)
+plt.grid()
+plt.xlabel("Time (s)")
+plt.ylabel("Excited state probability")
+
+### Photon counting distribution plots 
+x = [i for i in range(photon_bin_cut_off)]
+plt.figure(3)
+plt.bar(x, photon_data[0:photon_bin_cut_off])
+plt.xlabel("Photon Number")
+plt.ylabel("frequency")
+
+### Waiting time distribution plots 
+waiting_time = waiting_data[:,0]
+waiting_data = waiting_data[:,1]
+plt.figure(4)
+plt.bar(waiting_time, waiting_data, width=0.2)
+plt.xlabel("waiting time")
+plt.ylabel("frequency")
+
+# Take information before tau 
+waiting_time_f = waiting_time[0:11]
+waiting_data_f = waiting_time[0:11]
+
+plt.figure(5)
+plt.bar(waiting_time_f, waiting_data_f, width=0.01)
+plt.xlabel("waiting time")
+plt.ylabel("frequency")
+
+# Take information after tau 
+waiting_time_l = waiting_time[11:-1]
+waiting_data_l = waiting_data[11:-1]
+
+reduced_waiting_time_l = np.linspace(tau, end_time, waiting_bar_count)
+reduced_waiting_data_l = np.zeros(waiting_bar_count)
+increment = (end_time - tau) / waiting_bar_count
+
+for i in range(len(waiting_time_l)):
+
+    val = waiting_time_l[i] - tau 
+    c = floor(val/increment)
+
+    reduced_waiting_data_l[c] += waiting_data_l[i]
+
+plt.figure(6)
+plt.bar(reduced_waiting_time_l, reduced_waiting_data_l, width=0.1)
+plt.xlabel("waiting time")
+plt.ylabel("frequency")
+
+# Show all plots 
 plt.show()
-# title = "$\\tau = 0.2$, dt=0.002, $\\phi=\pi$, N=20, Samples=25000, $\\Omega = 10\pi$, $\\gamma_R = \\gamma_L = 0.5$"
-
-# plt.title(title)
-# plt.savefig(directory + "/spin_down_trim.png", dpi=600)
-# plt.savefig("../../temp/Figure_4.pdf")
-

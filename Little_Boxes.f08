@@ -15,17 +15,17 @@ program main
     ! Declare general variables and parameters
     real (kind=8) :: start_time = 0.0d0 
     integer (kind=8), parameter :: N = 20d0 
-    integer (kind=8), parameter :: end_time = 14d0 
-    integer (kind=8), parameter :: time_steps = 14000d0 
-    integer (kind=8), parameter :: num_of_simulations = 100d0
+    integer (kind=8), parameter :: end_time = 100d0 
+    integer (kind=8), parameter :: time_steps = 50000d0 
+    integer (kind=8), parameter :: num_of_simulations = 10000d0
     real (kind=8), parameter :: pi = 3.14159265358979323846d0 
     real (kind=8), parameter :: phase = pi !0.0d0
     real (kind=8), parameter :: gammaL = 0.5d0 
     real (kind=8), parameter :: gammaR = 0.5d0
     real (kind=8), parameter :: Omega = 10.0d0 * pi 
-    real (kind=8), parameter :: dt = 0.001d0 
+    real (kind=8), parameter :: dt = 0.002d0 
     integer (kind=8), parameter :: period = 5d0 
-    real (kind=8), parameter :: tau = 0.1d0 
+    real (kind=8), parameter :: tau = 0.2d0 
     real (kind=8) :: total
     integer (kind=8) :: sim, index, q, j, k, beginning, end, rate, log_line 
     real (kind=8), dimension(time_steps) :: time_list, rand_list
@@ -47,8 +47,8 @@ program main
     integer (kind=8), dimension(bin_width) :: photon_list
 
     ! Waiting time variables 
-    real (kind=8), parameter :: waiting_bin_width = tau / 10.0d0
-    integer (kind=8), parameter :: waiting_time_step = 1400 ! Needs to be manually calculated (end_time / waiting_bin_width)
+    real (kind=8), parameter :: waiting_bin_width = tau / 20.0d0
+    integer (kind=8), parameter :: waiting_time_step = 10000 ! Needs to be manually calculated (end_time / waiting_bin_width)
     real (kind=8) :: waiting_time, last_time_found
     integer (kind=8), dimension(waiting_time_step) :: waiting_time_list
     real (kind=8), dimension(waiting_time_step) :: reduced_time_list  
@@ -63,7 +63,7 @@ program main
 
     ! Print initial stuff into console 
     call print_info(tau, period, dt, num_of_simulations, Omega, end_time, &
-                            time_steps, phase, gammaL, gammaR, N)
+                            time_steps, phase, gammaL, gammaR, N, waiting_bin_width, waiting_time_step)
 
     ! Initialise spin up and down lists 
     spin_up_list = 0.0d0  
@@ -83,8 +83,10 @@ program main
     call linspace(start=start_time, end=end_time, list=reduced_time_list)
 
     ! Initialise lambdaL and lambdaR
-    lambdaL = sqrt(gammaL) * sqrt(N/tau) 
-    lambdaR = exp(cmplx(0.0d0, phase)) * sqrt(gammaR) * sqrt(N/tau) 
+    ! lambdaL = sqrt(gammaL) * sqrt(N/tau) 
+    ! lambdaR = exp(cmplx(0.0d0, phase)) * sqrt(gammaR) * sqrt(N/tau) 
+    lambdaL = exp(cmplx(0, phase / 2)) * sqrt(gammaL) * sqrt(N/tau)
+    lambdaR = exp(cmplx(0, -phase / 2)) * sqrt(gammaR) * sqrt(N/tau)
 
     ! Initialise waiting time distribution 
     waiting_time_list = 0d0 
@@ -107,10 +109,10 @@ program main
         ! Construct random number list 
         call random_number(rand_list)
 
-        spin_down_list(1) = 1.0d0 * num_of_simulations
-        spin_up_list(1) = 0.0d0
+        ! spin_down_list(1) = 1.0d0 * num_of_simulations
+        ! spin_up_list(1) = 0.0d0
 
-        do index = 2, size(time_list)
+        do index = 1, size(time_list)
 
             psi_0 = 0.0d0; psi_1 = 0.0d0; prob = 0.0d0; rand_num = 0.0d0; spin_up_prob = 0.0d0; 
             spin_down_prob = 0.0d0; spin_total = 0.0d0; total = 0.0d0
@@ -499,10 +501,10 @@ program main
     end subroutine
 
     subroutine print_info(tau, period, dt, num_of_simulations, Omega, end_time, &
-                            time_steps, phase, gammaL, gammaR, N)
+                            time_steps, phase, gammaL, gammaR, N, waiting_bin_width, waiting_time_step)
 
-        integer (kind=8) :: N, end_time, time_steps, num_of_simulations, period
-        real (kind=8) :: phase, gammaL, gammaR, dt, tau, Omega 
+        integer (kind=8) :: N, end_time, time_steps, num_of_simulations, period, waiting_time_step
+        real (kind=8) :: phase, gammaL, gammaR, dt, tau, Omega, waiting_bin_width
 
         print *, "Number of Boxes: ", N 
         print *, "simulation duration: ", end_time 
@@ -516,6 +518,8 @@ program main
         print *, "tau: ", tau 
         print *, "period: ", period 
         print *, "Delta t: ", tau / N 
+        print *, "waiting bin width: ", waiting_bin_width
+        print *, "waiting time step: ", waiting_time_step 
 
         ! Also will write this to an input.txt file 
         open(5, file="input.txt", status="replace")
@@ -532,6 +536,8 @@ program main
         write (5,*) "tau: ", tau 
         write (5,*) "period: ", period 
         write (5,*) "Delta t: ", tau / N 
+        write (5,*) "waiting bin width: ", waiting_bin_width
+        write (5,*) "waiting time step: ", waiting_time_step 
 
         close(5)
 

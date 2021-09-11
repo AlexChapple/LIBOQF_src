@@ -56,10 +56,6 @@ for i in range(num_of_dir):
         photon_list = photon_list + photon_data
         waiting_time_hist_list = waiting_time_hist_list + waiting_data
 
-        spin_up_list = spin_up_list / num_of_dir
-        spin_down_list = spin_down_list / num_of_dir
-        waiting_time_hist_list = waiting_time_hist_list / num_of_dir
-
         # Copy over input file if not done yet
         if input_file_copied == 0:
             src = working_dir + "input.txt"
@@ -67,8 +63,11 @@ for i in range(num_of_dir):
             copy2(src,dst)
             input_file_copied = 1
 
-
         print(str(i) + " directories summarised.")
+
+spin_up_list = spin_up_list / num_of_dir
+spin_down_list = spin_down_list / num_of_dir
+waiting_time_hist_list = waiting_time_hist_list / num_of_dir
             
 
 # ----- Write the respective data to files --------------------------------------------------------------------------------------------------
