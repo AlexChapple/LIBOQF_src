@@ -16,17 +16,17 @@ program main
 
     ! Declare general variables and parameters
     real (kind=8) :: start_time = 0.0d0 
-    integer (kind=8), parameter :: N = 100d0 
+    integer (kind=8), parameter :: N = 160d0 
     integer (kind=8), parameter :: end_time = 100d0 
-    integer (kind=8), parameter :: time_steps = 800000d0 
-    integer (kind=8), parameter :: num_of_simulations = 20d0
+    integer (kind=8), parameter :: time_steps = 400000d0 
+    integer (kind=8), parameter :: num_of_simulations = 15d0
     real (kind=8), parameter :: pi = 3.14159265358979323846d0 
     real (kind=8), parameter :: phase = pi !0.0d0
     real (kind=8), parameter :: gammaL = 0.5d0 
     real (kind=8), parameter :: gammaR = 0.5d0
     real (kind=8), parameter :: Omega = 10.0d0 * pi 
-    real (kind=8), parameter :: dt = 0.000125d0 
-    integer (kind=8), parameter :: period = 16d0 
+    real (kind=8), parameter :: dt = 0.00025d0 
+    integer (kind=8), parameter :: period = 5d0 
     real (kind=8), parameter :: tau = 0.2d0 
     real (kind=8) :: total
     integer (kind=8) :: sim, index, q, j, k, beginning, end, rate, log_line 
@@ -44,7 +44,7 @@ program main
     real (kind=8) :: psi_0, psi_1, prob, rand_num, spin_up_prob, spin_down_prob, spin_total ! spin_total is just the total probability of spin up and down for normalisation purposes 
 
     ! Photon counting parameters 
-    integer (kind=8) , parameter :: bin_width = 100d0 
+    integer (kind=8) , parameter :: bin_width = 200d0 
     integer (kind=8) :: photon_number
     integer (kind=8), dimension(bin_width) :: photon_list
 
@@ -55,7 +55,7 @@ program main
     integer (kind=8), dimension(waiting_time_step) :: waiting_time_list
     real (kind=8), dimension(waiting_time_step) :: reduced_time_list  
     integer (kind=8) :: first_photon, floored_multiple
-    integer (kind=8), parameter :: print_to_console = 0
+    integer (kind=8), parameter :: print_to_console = 1
 
     ! -------------------------------------------------------------------
     !

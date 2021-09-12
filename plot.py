@@ -7,13 +7,14 @@
 import matplotlib.pyplot as plt 
 import numpy as np 
 from math import floor
+import matplotlib
 
 # Variables 
 directory = "results/Omega_10_tau_01_phi_0/"
 photon_bin_cut_off = 25 
 end_time = 100
 tau = 0.2
-waiting_bar_count = 50 
+waiting_bar_count = 25 
 
 # If plotting test files in direct directory set true 
 local = True
@@ -44,6 +45,8 @@ spin_down_data = np.loadtxt(directory + spin_down_file, delimiter=delimeter)
 spin_up_data = np.loadtxt(directory + spin_up_file, delimiter=delimeter)
 photon_data = np.loadtxt(directory + photon_counting_file)
 waiting_data = np.loadtxt(directory + waiting_time_file, delimiter=delimeter)
+
+matplotlib.rcParams.update({'font.size': 22})
 
 ### Spin up and down plots 
 time_list = spin_down_data[:,0]
@@ -76,7 +79,7 @@ plt.ylabel("frequency")
 waiting_time = waiting_data[:,0]
 waiting_data = waiting_data[:,1]
 plt.figure(4)
-plt.bar(waiting_time, waiting_data, width=0.02)
+plt.bar(waiting_time, waiting_data, width=0.4)
 plt.xlabel("waiting time")
 plt.ylabel("frequency")
 plt.title("Total waiting time distribution")
@@ -89,7 +92,7 @@ plt.figure(5)
 plt.bar(waiting_time_f, waiting_data_f, width=0.005)
 plt.xlabel("waiting time")
 plt.ylabel("frequency")
-plt.title("waiting time distribution under tau")
+plt.title("waiting time distribution under $\\tau = 0.2$")
 
 # Take information after tau 
 waiting_time_l = waiting_time[21:-1]
@@ -107,10 +110,17 @@ for i in range(len(waiting_time_l)):
     reduced_waiting_data_l[c] += waiting_data_l[i]
 
 plt.figure(6)
-plt.bar(reduced_waiting_time_l, reduced_waiting_data_l, width=0.1)
+plt.bar(reduced_waiting_time_l, reduced_waiting_data_l, width=0.5)
 plt.xlabel("waiting time")
 plt.ylabel("frequency")
 plt.title("waiting time distribution after tau")
+
+# Takes information after tau but doesn't bin them into smaller bins 
+plt.figure(7)
+plt.bar(waiting_time_l, waiting_data_l, width=0.15)
+plt.xlabel("waiting time")
+plt.ylabel("frequency")
+plt.title("waiting time distribution after $\\tau = 0.2$")
 
 # Show all plots 
 plt.show()
