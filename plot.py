@@ -9,26 +9,34 @@ import numpy as np
 from math import floor
 
 # Variables 
-directory = "results/Omega_10_tau_02_phi_pi/"
-photon_bin_cut_off = 40 
-end_time = 100 
+directory = "results/Omega_10_tau_01_phi_0/"
+photon_bin_cut_off = 25 
+end_time = 100
 tau = 0.2
-waiting_bar_count = 30 
+waiting_bar_count = 50 
 
 # If plotting test files in direct directory set true 
 local = True
+Large = True
 if local == False:
     spin_down_file = "spin_down_total.txt"
     spin_up_file = "spin_up_total.txt"
     photon_counting_file = "photon_counting_total.txt"
     waiting_time_file = "waiting_time_total.txt"
     delimeter = ","
-else:
+elif local == True and Large == False:
     directory = "./"
     spin_down_file = "spin_down.txt"
     spin_up_file = "spin_up.txt"
     photon_counting_file = "photon_counting.txt"
     waiting_time_file = "waiting_time.txt"
+    delimeter = None 
+elif local == True and Large == True:
+    directory = "./"
+    spin_down_file = "spin_down_large.txt"
+    spin_up_file = "spin_up_large.txt"
+    photon_counting_file = "photon_counting_large.txt"
+    waiting_time_file = "waiting_time_large.txt"
     delimeter = None 
 
 # Import data 
@@ -43,11 +51,11 @@ spin_down_data = spin_down_data[:,1]
 spin_up_data = spin_up_data[:,1]
 
 plt.figure(1)
-plt.plot(time_list, spin_down_data, linewidth=0.5)
+plt.plot(time_list, spin_down_data, linewidth=3)
 plt.grid()
 plt.xlabel("Time (s)")
 plt.ylabel("Ground state probability")
-plt.xticks(np.arange(min(time_list), max(time_list)+1, 10.0))
+plt.xticks(np.arange(min(time_list), max(time_list)+1, 1.0))
 plt.yticks(np.arange(np.floor(np.min(spin_down_data)), np.ceil(np.max(spin_down_data)), 0.25))
 
 plt.figure(2)
@@ -60,6 +68,7 @@ plt.ylabel("Excited state probability")
 x = [i for i in range(photon_bin_cut_off)]
 plt.figure(3)
 plt.bar(x, photon_data[0:photon_bin_cut_off])
+plt.xticks(np.arange(0, photon_bin_cut_off, 1))
 plt.xlabel("Photon Number")
 plt.ylabel("frequency")
 
@@ -67,22 +76,24 @@ plt.ylabel("frequency")
 waiting_time = waiting_data[:,0]
 waiting_data = waiting_data[:,1]
 plt.figure(4)
-plt.bar(waiting_time, waiting_data, width=0.2)
+plt.bar(waiting_time, waiting_data, width=0.02)
 plt.xlabel("waiting time")
 plt.ylabel("frequency")
+plt.title("Total waiting time distribution")
 
 # Take information before tau 
-waiting_time_f = waiting_time[0:11]
-waiting_data_f = waiting_time[0:11]
+waiting_time_f = waiting_time[0:20]
+waiting_data_f = waiting_data[0:20]
 
 plt.figure(5)
-plt.bar(waiting_time_f, waiting_data_f, width=0.01)
+plt.bar(waiting_time_f, waiting_data_f, width=0.005)
 plt.xlabel("waiting time")
 plt.ylabel("frequency")
+plt.title("waiting time distribution under tau")
 
 # Take information after tau 
-waiting_time_l = waiting_time[11:-1]
-waiting_data_l = waiting_data[11:-1]
+waiting_time_l = waiting_time[21:-1]
+waiting_data_l = waiting_data[21:-1]
 
 reduced_waiting_time_l = np.linspace(tau, end_time, waiting_bar_count)
 reduced_waiting_data_l = np.zeros(waiting_bar_count)
@@ -99,6 +110,7 @@ plt.figure(6)
 plt.bar(reduced_waiting_time_l, reduced_waiting_data_l, width=0.1)
 plt.xlabel("waiting time")
 plt.ylabel("frequency")
+plt.title("waiting time distribution after tau")
 
 # Show all plots 
 plt.show()
