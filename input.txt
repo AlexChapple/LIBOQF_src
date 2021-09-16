@@ -1,14 +1,14 @@
- Number of Boxes:                   160
+ Number of Boxes:                   100
  simulation duration:                   100
- time steps:                400000
- number of simulations:                    30
+ time steps:                500000
+ number of simulations:                   270
  phase:    3.1415926535897931     
  gammaL:   0.50000000000000000     
  gammaR:   0.50000000000000000     
  Omega:    31.4159260    
- dt:    2.5000000000000001E-004
+ dt:    2.0000000000000001E-004
  tau:   0.20000000000000001     
- period:                     5
- Delta t:    1.2500000000000000E-003
+ period:                    10
+ Delta t:    2.0000000000000000E-003
  waiting bin width:    1.0000000000000000E-002
  waiting time step:                 10000
