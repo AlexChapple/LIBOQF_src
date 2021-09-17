@@ -7,7 +7,7 @@ import matplotlib.pyplot as plt
 import colours 
 import matplotlib
 
-emission_data = np.loadtxt("emission_tracking_N100_S.txt")
+emission_data = np.loadtxt("emission_tracking/emission_tracking_N200.txt")
 
 tau = 0.2 
 
@@ -98,6 +98,8 @@ prob_double = 100 * (double_emission_count) / total_emission_count
 prob_triple = 100 * ( triple_emission_count) / total_emission_count
 prob_quadruple = 100 * quadruple_emission_count / total_emission_count
 
+total_photon_count = single_emission_count + (2*double_emission_count) + (3*triple_emission_count) + (4*quadruple_emission_count)
+
 print("Probability of single emission: ", prob_single)
 print("Probability of double emission: ", prob_double)
 print("Probability of triple emission: ", prob_triple)
@@ -132,12 +134,14 @@ yval2 = bars2[0].get_height()
 yval3 = bars3[0].get_height()
 yval4 = bars4[0].get_height()
 
-plt.text(1, yval1+0.75, "Probability of single\nemission: " + str(round(prob_single, 3)) + "%", fontsize=13, horizontalalignment="center", c=colours.spanish_gray)
-plt.text(2, yval2+0.75, "Probability of double\nemission: " + str(round(prob_double, 3)) + "%", fontsize=13, horizontalalignment="center", c=colours.spanish_gray)
-plt.text(3, yval3+0.75, "Probability of triple\nemission: " + str(round(prob_triple, 3)) + "%", fontsize=13, horizontalalignment="center", c=colours.spanish_gray)
-plt.text(4, yval4+0.75, "Probability of quadruple\nemission: " + str(round(prob_quadruple, 3)) + "%", fontsize=13, horizontalalignment="center", c=colours.spanish_gray)
+plt.text(1, yval1+5.75, "Probability of single\nemission: " + str(round(prob_single, 3)) + "%", fontsize=13, horizontalalignment="center", c="black")
+plt.text(2, yval2+5.75, "Probability of double\nemission: " + str(round(prob_double, 3)) + "%", fontsize=13, horizontalalignment="center", c="black")
+plt.text(3, yval3+5.75, "Probability of triple\nemission: " + str(round(prob_triple, 3)) + "%", fontsize=13, horizontalalignment="center", c="black")
+plt.text(4, yval4+5.75, "Probability of quadruple\nemission: " + str(round(prob_quadruple, 3)) + "%", fontsize=13, horizontalalignment="center", c="black")
 
 plt.xlabel("Photon Emission")
 plt.ylabel("frequency")
 # plt.legend()
 plt.show()
+
+print(total_photon_count)
