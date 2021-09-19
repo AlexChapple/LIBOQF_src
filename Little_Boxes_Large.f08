@@ -17,16 +17,16 @@ program main
 
     ! Declare general variables and parameters
     real (kind=8) :: start_time = 0.0d0 
-    integer (kind=8), parameter :: N = 100d0 
+    integer (kind=8), parameter :: N = 80d0 
     integer (kind=8), parameter :: end_time = 100d0 
-    integer (kind=8), parameter :: time_steps = 50000d0 
-    integer (kind=8), parameter :: num_of_simulations = 500d0
+    integer (kind=8), parameter :: time_steps = 40000d0 
+    integer (kind=8), parameter :: num_of_simulations = 1d0
     real (kind=8), parameter :: pi = 3.14159265358979323846d0 
     real (kind=8), parameter :: phase = pi !0.0d0
     real (kind=8), parameter :: gammaL = 0.5d0 
     real (kind=8), parameter :: gammaR = 0.5d0
     real (kind=8), parameter :: Omega = 10.0d0 * pi 
-    real (kind=8), parameter :: dt = 0.002d0 
+    real (kind=8), parameter :: dt = 0.0025d0 
     integer (kind=8), parameter :: period = 1d0 
     real (kind=8), parameter :: tau = 0.2d0 
     real (kind=8) :: total
@@ -60,7 +60,7 @@ program main
 
     ! Emission tracking variables 
     integer (kind=8) :: emission_index 
-    integer (kind=8), parameter :: tracking_bin_width = 5000
+    integer (kind=8), parameter :: tracking_bin_width = 50000
     real (kind=8), dimension(tracking_bin_width) :: emission_tracking_list  
 
     ! -------------------------------------------------------------------
@@ -428,11 +428,11 @@ program main
     spin_down_list = spin_down_list / num_of_simulations
 
     !!! Write out final result to a txt file
-    open(1, file="spin_up_large_experimental.txt", status="replace")
-    open(2, file="spin_down_large_experimental.txt", status="replace")
-    open(3, file="photon_counting_large_experimental.txt", status="replace")
-    open(4, file="waiting_time_large_experimental.txt", status="replace")
-    open(5, file="emission_tracking_experimental.txt", status="replace")
+    open(1, file="spin_up_large_N80_3.txt", status="replace")
+    open(2, file="spin_down_large_N80_3.txt", status="replace")
+    open(3, file="photon_counting_large_N80_3.txt", status="replace")
+    open(4, file="waiting_time_large_N80_3.txt", status="replace")
+    open(5, file="emission_tracking_N80_3.txt", status="replace")
 
     do index = 1,size(time_list)
         write(1,*) time_list(index), spin_up_list(index)

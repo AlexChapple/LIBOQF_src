@@ -7,9 +7,10 @@ import matplotlib.pyplot as plt
 import colours 
 import matplotlib
 
-emission_data = np.loadtxt("emission_tracking/emission_tracking_N200.txt")
+emission_data = np.loadtxt("emission_tracking/emission_tracking_N80_2.txt")
 
 tau = 0.2 
+num_of_sim = 20
 
 single_emission_count = 0 
 double_emission_count = 0
@@ -145,3 +146,4 @@ plt.ylabel("frequency")
 plt.show()
 
 print(total_photon_count)
+print("avg number of photons per simulation: ", total_photon_count/num_of_sim)
