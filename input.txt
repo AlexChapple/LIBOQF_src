@@ -1,7 +1,7 @@
  Number of Boxes:                    80
  simulation duration:                   100
  time steps:                 40000
- number of simulations:                     1
+ number of simulations:                    10
  phase:    3.1415926535897931     
  gammaL:   0.50000000000000000     
  gammaR:   0.50000000000000000     
