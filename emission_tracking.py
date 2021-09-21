@@ -7,10 +7,10 @@ import matplotlib.pyplot as plt
 import colours 
 import matplotlib
 
-emission_data = np.loadtxt("emission_tracking/emission_tracking_N64.txt")
+emission_data = np.loadtxt("emission_tracking_total.txt")
 
 tau = 0.2 
-num_of_sim = 20
+num_of_sim = 50000
 
 single_emission_count = 0 
 double_emission_count = 0

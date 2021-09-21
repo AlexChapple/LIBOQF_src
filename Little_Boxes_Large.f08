@@ -17,16 +17,16 @@ program main
 
     ! Declare general variables and parameters
     real (kind=8) :: start_time = 0.0d0 
-    integer (kind=8), parameter :: N = 80d0 
+    integer (kind=8), parameter :: N = 20d0 
     integer (kind=8), parameter :: end_time = 100d0 
-    integer (kind=8), parameter :: time_steps = 40000d0 
-    integer (kind=8), parameter :: num_of_simulations = 1000d0
+    integer (kind=8), parameter :: time_steps = 10000d0 
+    integer (kind=8), parameter :: num_of_simulations = 10000d0
     real (kind=8), parameter :: pi = 3.14159265358979323846d0 
     real (kind=8), parameter :: phase = pi !0.0d0
     real (kind=8), parameter :: gammaL = 0.5d0 
     real (kind=8), parameter :: gammaR = 0.5d0
     real (kind=8), parameter :: Omega = 10.0d0 * pi 
-    real (kind=8), parameter :: dt = 0.0025d0 
+    real (kind=8), parameter :: dt = 0.01d0 
     integer (kind=8), parameter :: period = 1d0 
     real (kind=8), parameter :: tau = 0.2d0 
     real (kind=8) :: total
@@ -60,7 +60,7 @@ program main
 
     ! Emission tracking variables 
     integer (kind=8) :: emission_index 
-    integer (kind=8), parameter :: tracking_bin_width = 80000
+    integer (kind=8), parameter :: tracking_bin_width = 500000
     real (kind=8), dimension(tracking_bin_width) :: emission_tracking_list  
 
     ! -------------------------------------------------------------------
@@ -413,7 +413,7 @@ program main
 
         ! Prints simulation completeion to terminal 
         if (end_time >= 15) then 
-            print *, "photon count: ", photon_number
+            ! print *, "photon count: ", photon_number
             print *, sim ,' simulations completed.'
         else
             if (mod(sim, 10) == 0) then 
@@ -428,11 +428,11 @@ program main
     spin_down_list = spin_down_list / num_of_simulations
 
     !!! Write out final result to a txt file
-    open(1, file="spin_up_N80.txt", status="replace")
-    open(2, file="spin_down_N80.txt", status="replace")
-    open(3, file="photon_counting_N80.txt", status="replace")
-    open(4, file="waiting_time_N80.txt", status="replace")
-    open(5, file="emission_tracking_N80.txt", status="replace")
+    open(1, file="spin_up_e.txt", status="replace")
+    open(2, file="spin_down_e.txt", status="replace")
+    open(3, file="photon_counting_e.txt", status="replace")
+    open(4, file="waiting_time_e.txt", status="replace")
+    open(5, file="emission_tracking_e.txt", status="replace")
 
     do index = 1,size(time_list)
         write(1,*) time_list(index), spin_up_list(index)

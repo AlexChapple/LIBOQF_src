@@ -10,15 +10,15 @@ from math import floor
 import matplotlib
 
 # Variables 
-directory = "results/Omega_10_tau_01_phi_0/"
+directory = "results/N80/"
 photon_bin_cut_off = 25 
 end_time = 100
 tau = 0.2
 waiting_bar_count = 25 
 
 # If plotting test files in direct directory set true 
-local = True
-Large = True
+local = False
+Large = False
 if local == False:
     spin_down_file = "spin_down_total.txt"
     spin_up_file = "spin_up_total.txt"
@@ -27,10 +27,10 @@ if local == False:
     delimeter = ","
 elif local == True and Large == False:
     directory = "./"
-    spin_down_file = "spin_down.txt"
-    spin_up_file = "spin_up.txt"
-    photon_counting_file = "photon_counting.txt"
-    waiting_time_file = "waiting_time.txt"
+    spin_down_file = "spin_down_e.txt"
+    spin_up_file = "spin_up_e.txt"
+    photon_counting_file = "photon_counting_e.txt"
+    waiting_time_file = "waiting_time_e.txt"
     delimeter = None 
 elif local == True and Large == True:
     directory = "./"
@@ -54,11 +54,11 @@ spin_down_data = spin_down_data[:,1]
 spin_up_data = spin_up_data[:,1]
 
 plt.figure(1)
-plt.plot(time_list, spin_down_data, linewidth=3)
+plt.plot(time_list, spin_down_data, linewidth=0.5)
 plt.grid()
 plt.xlabel("Time (s)")
 plt.ylabel("Ground state probability")
-plt.xticks(np.arange(min(time_list), max(time_list)+1, 1.0))
+plt.xticks(np.arange(min(time_list), max(time_list)+1, 10.0))
 plt.yticks(np.arange(np.floor(np.min(spin_down_data)), np.ceil(np.max(spin_down_data)), 0.25))
 
 plt.figure(2)
@@ -124,3 +124,10 @@ plt.title("waiting time distribution after $\\tau = 0.2$")
 
 # Show all plots 
 plt.show()
+
+# EXPERIMENTNAL: prints total emission count 
+total = 0 
+for i in range(len(photon_data)):
+    total += photon_data[i]*i
+
+print("photon emission count = ", total)
