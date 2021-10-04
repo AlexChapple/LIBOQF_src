@@ -10,7 +10,7 @@ from math import floor
 import matplotlib
 
 # Variables 
-directory = "results/Omega_10_tau_01_phi_0/"
+directory = "results/N80/"
 photon_bin_cut_off = 16 
 end_time = 100
 tau = 0.2
@@ -25,8 +25,8 @@ spanish_gray = "#666666"
 mauve2 = "#cbb2fe"
 
 # If plotting test files in direct directory set true 
-local = True
-Large = True
+local = False
+Large = False
 if local == False:
     spin_down_file = "spin_down_total.txt"
     spin_up_file = "spin_up_total.txt"

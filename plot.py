@@ -8,6 +8,7 @@ import matplotlib.pyplot as plt
 import numpy as np 
 from math import floor
 import matplotlib
+import colours
 
 # Variables 
 directory = "results/N80/"
@@ -53,46 +54,56 @@ time_list = spin_down_data[:,0]
 spin_down_data = spin_down_data[:,1]
 spin_up_data = spin_up_data[:,1]
 
-plt.figure(1)
+fig1 = plt.figure(1)
+fig1.set_size_inches(18.5, 10.5)
 plt.plot(time_list, spin_down_data, linewidth=0.5)
 plt.grid()
 plt.xlabel("Time (s)")
 plt.ylabel("Ground state probability")
 plt.xticks(np.arange(min(time_list), max(time_list)+1, 10.0))
 plt.yticks(np.arange(np.floor(np.min(spin_down_data)), np.ceil(np.max(spin_down_data)), 0.25))
+plt.savefig("ground_state.pdf", dpi=600)
 
-plt.figure(2)
+fig2 = plt.figure(2)
+fig2.set_size_inches(18.5, 10.5)
 plt.plot(time_list, spin_up_data, linewidth=3)
 plt.grid()
 plt.xlabel("Time (s)")
 plt.ylabel("Excited state probability")
+plt.savefig("excited_state.pdf", dpi=600)
 
 ### Photon counting distribution plots 
 x = [i for i in range(photon_bin_cut_off)]
-plt.figure(3)
+fig3 = plt.figure(3)
+fig3.set_size_inches(18.5, 10.5)
 plt.bar(x, photon_data[0:photon_bin_cut_off])
 plt.xticks(np.arange(0, photon_bin_cut_off, 1))
 plt.xlabel("Photon Number")
 plt.ylabel("frequency")
+plt.savefig("photon_counting.pdf", dpi=600)
 
 ### Waiting time distribution plots 
 waiting_time = waiting_data[:,0]
 waiting_data = waiting_data[:,1]
-plt.figure(4)
-plt.bar(waiting_time, waiting_data, width=0.4)
+fig4 = plt.figure(4)
+fig4.set_size_inches(18.5, 10.5)
+plt.bar(waiting_time, waiting_data, width=0.1, color=colours.french_violet)
 plt.xlabel("waiting time")
 plt.ylabel("frequency")
 plt.title("Total waiting time distribution")
+plt.savefig("waiting_time.pdf", dpi=600)
 
 # Take information before tau 
 waiting_time_f = waiting_time[0:20]
 waiting_data_f = waiting_data[0:20]
 
-plt.figure(5)
+fig5 = plt.figure(5)
+fig5.set_size_inches(18.5, 10.5)
 plt.bar(waiting_time_f, waiting_data_f, width=0.005)
 plt.xlabel("waiting time")
 plt.ylabel("frequency")
 plt.title("waiting time distribution under $\\tau = 0.2$")
+plt.savefig("waiting_time_before.pdf", dpi=600)
 
 # Take information after tau 
 waiting_time_l = waiting_time[21:-1]
@@ -109,21 +120,25 @@ for i in range(len(waiting_time_l)):
 
     reduced_waiting_data_l[c] += waiting_data_l[i]
 
-plt.figure(6)
+fig6 = plt.figure(6)
+fig6.set_size_inches(18.5, 10.5)
 plt.bar(reduced_waiting_time_l, reduced_waiting_data_l, width=0.5)
 plt.xlabel("waiting time")
 plt.ylabel("frequency")
 plt.title("waiting time distribution after tau")
+plt.savefig("waiting_time_after1.pdf", dpi=600)
 
 # Takes information after tau but doesn't bin them into smaller bins 
-plt.figure(7)
+fig7 = plt.figure(7)
+fig7.set_size_inches(18.5, 10.5)
 plt.bar(waiting_time_l, waiting_data_l, width=0.15)
 plt.xlabel("waiting time")
 plt.ylabel("frequency")
 plt.title("waiting time distribution after $\\tau = 0.2$")
+plt.savefig("waiting_time_after2.pdf", dpi=600)
 
 # Show all plots 
-plt.show()
+
 
 # EXPERIMENTNAL: prints total emission count 
 total = 0 
