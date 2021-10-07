@@ -10,7 +10,7 @@ from math import floor
 import matplotlib
 
 # Variables 
-directory = "results/N80/"
+directory = "results/Omega_10_tau_01_phi_0/"
 photon_bin_cut_off = 16 
 end_time = 100
 tau = 0.2

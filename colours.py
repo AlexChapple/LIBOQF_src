@@ -18,5 +18,18 @@ dark_orchid="#9D4EDD"
 # Gray 
 spanish_gray = "#666666"
 cultured = "#F8F9FA"
+cultured2 = "#F5F5F5"
 
+# Green 
 new_green = "#38b000"
+
+# Pastel Colours
+pastel_purple = "#cdb4db"
+pastel_blue = "#a2d2ff"
+
+# Greek Colours 
+greek_blue = "#0081a7"
+greek_red = "#f07167"
+
+# Reds 
+sizzling_red = "#E94957"
