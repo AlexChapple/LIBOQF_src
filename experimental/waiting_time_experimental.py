@@ -4,7 +4,7 @@ emission_data = np.loadtxt("experimental/emission_tracking_e.txt")
 
 tau = 0.2 
 end_time = 100
-bin_width = tau / 10 
+bin_width = tau / 10
 
 waiting_time_list = np.zeros((int(np.ceil(end_time/bin_width))))
 
