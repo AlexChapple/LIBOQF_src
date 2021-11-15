@@ -20,7 +20,7 @@ program main
     integer (kind=8), parameter :: N = 20d0 
     integer (kind=8), parameter :: end_time = 100d0 
     integer (kind=8), parameter :: time_steps = 50000d0 
-    integer (kind=8), parameter :: num_of_simulations = 1d0
+    integer (kind=8), parameter :: num_of_simulations = 2000d0
     real (kind=8), parameter :: pi = 3.14159265358979323846d0 
     real (kind=8), parameter :: phase = pi !0.0d0
     real (kind=8), parameter :: gammaL = 0.5d0 
@@ -56,7 +56,7 @@ program main
     integer (kind=8), dimension(waiting_time_step) :: waiting_time_list
     real (kind=8), dimension(waiting_time_step) :: reduced_time_list  
     integer (kind=8) :: first_photon, floored_multiple
-    integer (kind=8), parameter :: print_to_console = 1
+    integer (kind=8), parameter :: print_to_console = 0
 
     ! Emission tracking variables 
     integer (kind=8) :: emission_index 
@@ -286,7 +286,7 @@ program main
 
                         floored_multiple = floor(waiting_time / waiting_bin_width)
 
-                        waiting_time_list(floored_multiple) = waiting_time_list(floored_multiple) + 1
+                        waiting_time_list(floored_multiple + 1) = waiting_time_list(floored_multiple + 1) + 1
 
                         last_time_found = time_list(index)
 

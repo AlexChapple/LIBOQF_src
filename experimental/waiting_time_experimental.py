@@ -1,12 +1,14 @@
 import numpy as np 
+import matplotlib.pyplot as plt 
 
 emission_data = np.loadtxt("experimental/emission_tracking_e.txt")
 
 tau = 0.2 
 end_time = 100
-bin_width = tau / 10
+bin_width = tau / 10 
 
-waiting_time_list = np.zeros((int(np.ceil(end_time/bin_width))))
+waiting_time_list = np.zeros(int(np.ceil(end_time/bin_width)))
+reduced_time_list = np.linspace(0,100,int(np.ceil(end_time/bin_width)))
 
 ### Sort the waiting time ### 
 
@@ -37,7 +39,5 @@ for emission in emission_data:
 
             last_time = emission
 
-
-
-print(waiting_time_list)
-print(simulation_counter)
+plt.bar(reduced_time_list, waiting_time_list)
+plt.show()

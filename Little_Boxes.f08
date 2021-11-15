@@ -1,5 +1,7 @@
-! Little Boxes Multi with Euler's method adapted into Fortran code
-!
+! Simulation of the quantum system using quantum trajectories and the SDW model. 
+! This is the HEAD file. 
+! 
+! Author: Alex Chapple 
 
 program main
 
@@ -8,8 +10,8 @@ program main
     ! This runs the simulation, and writes to separate files the spin statistics,
     ! photon counting distribution, and more. 
     ! 
-    ! This file is specifically for large N ( >= 100)
-    ! Imcorporating tracking photon emission times now 
+    ! Waiting time distribution has been removed, and emission tracking has been added. 
+    ! Waiting time distribution will be calculated in post. 
     !
     ! ----------------------------------------------------------------------------------
 
@@ -20,7 +22,7 @@ program main
     integer (kind=8), parameter :: N = 20d0 
     integer (kind=8), parameter :: end_time = 100d0 
     integer (kind=8), parameter :: time_steps = 50000d0 
-    integer (kind=8), parameter :: num_of_simulations = 2000d0
+    integer (kind=8), parameter :: num_of_simulations = 20d0
     real (kind=8), parameter :: pi = 3.14159265358979323846d0 
     real (kind=8), parameter :: phase = pi !0.0d0
     real (kind=8), parameter :: gammaL = 0.5d0 
@@ -30,7 +32,7 @@ program main
     integer (kind=8), parameter :: period = 5d0 
     real (kind=8), parameter :: tau = 0.2d0 
     real (kind=8) :: total
-    integer (kind=8) :: sim, index, q, j, k, beginning, end, rate, log_line 
+    integer (kind=8) :: sim, index, q, j, k, beginning, end, rate, log_line, index1, index2
     real (kind=8), dimension(time_steps) :: time_list, rand_list
     complex (kind=8) :: lambdaL, lambdaR
     complex (kind=8), parameter :: i = cmplx(0.0d0,1.0d0) 
@@ -49,19 +51,10 @@ program main
     integer (kind=8) :: photon_number
     integer (kind=8), dimension(bin_width) :: photon_list
 
-    ! Waiting time variables 
-    real (kind=8), parameter :: waiting_bin_width = tau / 20.0d0
-    integer (kind=8), parameter :: waiting_time_step = 10000 ! Needs to be manually calculated (end_time / waiting_bin_width)
-    real (kind=8) :: waiting_time, last_time_found
-    integer (kind=8), dimension(waiting_time_step) :: waiting_time_list
-    real (kind=8), dimension(waiting_time_step) :: reduced_time_list  
-    integer (kind=8) :: first_photon, floored_multiple
-    integer (kind=8), parameter :: print_to_console = 0
-
     ! Emission tracking variables 
     integer (kind=8) :: emission_index 
-    integer (kind=8), parameter :: tracking_bin_width = 500000
-    real (kind=8), dimension(tracking_bin_width) :: emission_tracking_list  
+    integer (kind=8), parameter :: tracking_bin_width = 100000
+    real (kind=8), dimension(num_of_simulations, tracking_bin_width) :: emission_tracking_list  
 
     ! -------------------------------------------------------------------
     !
@@ -71,7 +64,7 @@ program main
 
     ! Print initial stuff into console 
     call print_info(tau, period, dt, num_of_simulations, Omega, end_time, &
-                            time_steps, phase, gammaL, gammaR, N, waiting_bin_width, waiting_time_step)
+                            time_steps, phase, gammaL, gammaR, N)
 
     ! Initialise spin up and down lists 
     spin_up_list = 0.0d0  
@@ -83,24 +76,15 @@ program main
     ! Initialise log line 
     log_line = 0d0 
 
-    ! Initialise emission tracking line 
-    emission_index = 1d0 
-
     ! Program execution time tracking 
     call system_clock(beginning, rate)
 
     ! Construct time_list
     call linspace(start=start_time, end=end_time, list=time_list) ! This makes the time list 
-    call linspace(start=start_time, end=end_time, list=reduced_time_list)
 
     ! Initialise lambdaL and lambdaR
-    ! lambdaL = sqrt(gammaL) * sqrt(N/tau) 
-    ! lambdaR = exp(cmplx(0.0d0, phase)) * sqrt(gammaR) * sqrt(N/tau) 
     lambdaL = exp(cmplx(0, phase / 2)) * sqrt(gammaL) * sqrt(N/tau)
     lambdaR = exp(cmplx(0, -phase / 2)) * sqrt(gammaR) * sqrt(N/tau)
-
-    ! Initialise waiting time distribution 
-    waiting_time_list = 0d0 
 
 
     ! A do loop will go through and do the simulations here
@@ -108,10 +92,8 @@ program main
 
         photon_number = 0d0 ! Sets the photon number to zero at the start of every simulation 
 
-        last_time_found = 0.0d0 ! Sets initial waiting time to zero 
-        waiting_time = 0.0d0 ! Initialises waiting time 
-        first_photon = 0d0 
-        floored_multiple = 0d0 ! initialises multiple found 
+        ! Initialise emission tracking line 
+        emission_index = 1d0 
 
         ! Initialise arrays
         call initialise_arrays(N, g_0, g_0_new, e_0 , e_0_new, g_1, g_1_new,&
@@ -119,9 +101,6 @@ program main
 
         ! Construct random number list 
         call random_number(rand_list)
-
-        ! spin_down_list(1) = 1.0d0 * num_of_simulations
-        ! spin_up_list(1) = 0.0d0
 
         do index = 1, size(time_list)
 
@@ -190,9 +169,6 @@ program main
             e_1_new = e_1 + (dt*e_1_new) 
             g_2_new = g_2 + (dt*g_2_new) 
             e_2_new = e_2 + (dt*e_2_new)
-
-            ! Normalise everything here
-            ! call normalise_new(total, N, g_0_new, e_0_new, g_1_new, e_1_new, g_2_new, e_2_new)
 
             ! Check photon 
             if (mod(index, period) == 0) then 
@@ -270,34 +246,8 @@ program main
                     ! Photon counting done here 
                     photon_number = photon_number + 1
 
-                    ! Waiting time statistics done here 
-                    if (first_photon == 0) then ! Doesn't count the first photon emitted, as it hasn't waited
-
-                        if (print_to_console /= 0) then 
-                            print *, "first photon emitted at: ", time_list(index)
-                        end if 
-
-                        first_photon = 1
-                        last_time_found = time_list(index)
-
-                    else
-
-                        waiting_time = time_list(index) - last_time_found
-
-                        floored_multiple = floor(waiting_time / waiting_bin_width)
-
-                        waiting_time_list(floored_multiple + 1) = waiting_time_list(floored_multiple + 1) + 1
-
-                        last_time_found = time_list(index)
-
-                        if (print_to_console /= 0) then 
-                            print *, "photon found at: ", time_list(index), "waiting: ", waiting_time
-                        end if 
-                        
-                    end if 
-
                     ! Photon emission tracking done here
-                    emission_tracking_list(emission_index) = time_list(index) ! Saves the emission time to the end of the list 
+                    emission_tracking_list(sim, emission_index) = time_list(index) ! Saves the emission time to the end of the list 
                     emission_index = emission_index + 1 ! Increases the emission index for the next emission 
                 
                 else ! Photon not found 
@@ -428,30 +378,37 @@ program main
     spin_down_list = spin_down_list / num_of_simulations
 
     !!! Write out final result to a txt file
-    open(1, file="spin_up.txt", status="replace")
-    open(2, file="spin_down.txt", status="replace")
-    open(3, file="photon_counting.txt", status="replace")
-    open(4, file="waiting_time.txt", status="replace")
-    open(5, file="emission_tracking.txt", status="replace")
+    open(1, file="spin_up_e.txt", status="replace")
+    open(2, file="spin_down_e.txt", status="replace")
+    open(3, file="photon_counting_e.txt", status="replace")
+    open(4, file="emission_tracking_e.txt", status="replace")
 
+    ! Writes spin up and down lists 
     do index = 1,size(time_list)
         write(1,*) time_list(index), spin_up_list(index)
         write(2,*) time_list(index), spin_down_list(index)
     end do 
 
+    ! Writes photon counting 
     do index = 1,bin_width
         write(3,*) photon_list(index)
     end do 
 
-    do index =1, waiting_time_step
-        write(4,*) reduced_time_list(index), waiting_time_list(index)
+    ! Writes emission tracking 
+    do index1 = 1, num_of_simulations
+        do index2 = 1, tracking_bin_width
+            if (emission_tracking_list(index1, index2) == 0d0) then 
+                exit  
+            else
+                write(4,*) emission_tracking_list(index1, index2)
+            end if 
+        end do 
+
+        write(4,*) end_time + 50d0 
+
     end do 
 
-    do index =1, (emission_index-1)
-        write(5,*) emission_tracking_list(index)
-    end do 
-
-    close(1); close(2); close(3); close(4); close(5)
+    close(1); close(2); close(3); close(4)
     
     call system_clock(end)
 
@@ -523,10 +480,10 @@ program main
     end subroutine
 
     subroutine print_info(tau, period, dt, num_of_simulations, Omega, end_time, &
-                            time_steps, phase, gammaL, gammaR, N, waiting_bin_width, waiting_time_step)
+                            time_steps, phase, gammaL, gammaR, N)
 
-        integer (kind=8) :: N, end_time, time_steps, num_of_simulations, period, waiting_time_step
-        real (kind=8) :: phase, gammaL, gammaR, dt, tau, Omega, waiting_bin_width
+        integer (kind=8) :: N, end_time, time_steps, num_of_simulations, period
+        real (kind=8) :: phase, gammaL, gammaR, dt, tau, Omega
 
         print *, "Number of Boxes: ", N 
         print *, "simulation duration: ", end_time 
@@ -540,8 +497,6 @@ program main
         print *, "tau: ", tau 
         print *, "period: ", period 
         print *, "Delta t: ", tau / N 
-        print *, "waiting bin width: ", waiting_bin_width
-        print *, "waiting time step: ", waiting_time_step 
 
         ! Also will write this to an input.txt file 
         open(5, file="input.txt", status="replace")
@@ -558,8 +513,6 @@ program main
         write (5,*) "tau: ", tau 
         write (5,*) "period: ", period 
         write (5,*) "Delta t: ", tau / N 
-        write (5,*) "waiting bin width: ", waiting_bin_width
-        write (5,*) "waiting time step: ", waiting_time_step 
 
         close(5)
 
