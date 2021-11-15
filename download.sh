@@ -1,6 +1,6 @@
 #!/bin/bash
 
-source="N80"
+source="Omega_10_tau_02_phi_pi"
 mkdir results/$source
 
 send_down () {
@@ -10,5 +10,5 @@ send_down () {
 send_down spin_up_total.txt
 send_down spin_down_total.txt 
 send_down photon_counting_total.txt 
-send_down waiting_time_total.txt
+send_down emission_tracking_total.txt
 send_down input.txt

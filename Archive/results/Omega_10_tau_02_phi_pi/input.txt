@@ -10,3 +10,5 @@
  tau:   0.20000000000000001     
  period:                     5
  Delta t:    1.0000000000000000E-002
+ waiting bin width:    1.0000000000000000E-002
+ waiting time step:                 10000

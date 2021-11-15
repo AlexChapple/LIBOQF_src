@@ -3,7 +3,6 @@
 import os 
 from shutil import copy2
 
-
 # Number of directories wanted
 num_of_dirs = 50
 
@@ -31,6 +30,6 @@ for i in range(num_of_dirs):
     open(working_dir + "spin_down.txt", "a+").close()
     open(working_dir + "spin_up.txt", "a+").close()
     open(working_dir + "photon_counting.txt", "a+").close()
-    open(working_dir + "waiting_time.txt", "a+").close()
+    open(working_dir + "emission_tracking.txt", "a+").close()
     
 

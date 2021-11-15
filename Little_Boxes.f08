@@ -378,10 +378,10 @@ program main
     spin_down_list = spin_down_list / num_of_simulations
 
     !!! Write out final result to a txt file
-    open(1, file="spin_up_e.txt", status="replace")
-    open(2, file="spin_down_e.txt", status="replace")
-    open(3, file="photon_counting_e.txt", status="replace")
-    open(4, file="emission_tracking_e.txt", status="replace")
+    open(1, file="spin_up.txt", status="replace")
+    open(2, file="spin_down.txt", status="replace")
+    open(3, file="photon_counting.txt", status="replace")
+    open(4, file="emission_tracking.txt", status="replace")
 
     ! Writes spin up and down lists 
     do index = 1,size(time_list)
