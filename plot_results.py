@@ -11,7 +11,6 @@ directory = "results/Omega_10_tau_02_phi_pi/"
 photon_bin_cut_off = 36
 end_time = 100
 tau = 0.2
-waiting_bar_count = 25
 num_of_simulations = 100000
 
 delimiter = ","
@@ -20,7 +19,6 @@ single_trajectory = False
 spin_down_data = np.loadtxt(directory + "spin_down_total.txt", delimiter=delimiter)
 spin_up_data = np.loadtxt(directory + "spin_up_total.txt", delimiter=delimiter)
 photon_data = np.loadtxt(directory + "photon_counting_total.txt", delimiter=delimiter)[0:photon_bin_cut_off]
-waiting_data = np.loadtxt(directory + "waiting_time_total.txt", delimiter=delimiter)
 if single_trajectory == True:
     emission_tracking_data = np.loadtxt(directory + "emission_tracking_total.txt", delimiter=delimiter)
 
@@ -167,68 +165,3 @@ plt.xlabel("Photon count")
 plt.ylabel("Frequency (Normalised)")
 plt.savefig(directory + "photon_counting.pdf", facecolor=fig1.get_facecolor(), transparent=True, dpi=600)
 
-
-# Plot waiting time distribution 
-fig6 = plt.figure(6)
-fig6.set_size_inches(18.5, 10.5)
-fig6.set_alpha(0)
-fig6.set_facecolor("none")
-ax6 = plt.axes()
-ax6.spines['top'].set_visible(False)
-ax6.spines['right'].set_visible(False)
-ax6.spines['left'].set_color(colours.spanish_gray)
-ax6.spines['bottom'].set_color(colours.spanish_gray)
-ax6.tick_params(axis='x', colors=colours.spanish_gray)
-ax6.tick_params(axis='y', colors=colours.spanish_gray)
-ax6.xaxis.label.set_color(colours.spanish_gray)
-ax6.yaxis.label.set_color(colours.spanish_gray)
-
-waiting_data_norm = [i/num_of_simulations for i in waiting_data[:,1]]
-
-plt.bar(waiting_data[:,0], waiting_data_norm, width=0.01, color=colours.greek_blue)
-plt.xlabel("Waiting Time (seconds)")
-plt.ylabel("Frequency (Normalised)")
-plt.savefig(directory + "waiting_time.pdf", facecolor=fig1.get_facecolor(), transparent=True, dpi=600)
-
-
-# Waiting time plot (within tau)
-
-fig7 = plt.figure(7)
-fig7.set_size_inches(18.5, 10.5)
-fig7.set_alpha(0)
-fig7.set_facecolor("none")
-ax7 = plt.axes()
-ax7.spines['top'].set_visible(False)
-ax7.spines['right'].set_visible(False)
-ax7.spines['left'].set_color(colours.spanish_gray)
-ax7.spines['bottom'].set_color(colours.spanish_gray)
-ax7.tick_params(axis='x', colors=colours.spanish_gray)
-ax7.tick_params(axis='y', colors=colours.spanish_gray)
-ax7.xaxis.label.set_color(colours.spanish_gray)
-ax7.yaxis.label.set_color(colours.spanish_gray)
-
-plt.bar(waiting_data[:,0][0:20], waiting_data_norm[0:20], width=0.0075, color=colours.greek_blue)
-plt.xlabel("Waiting Time (seconds)")
-plt.ylabel("Frequency (Normalised)")
-plt.savefig(directory + "waiting_time_less.pdf", facecolor=fig1.get_facecolor(), transparent=True, dpi=600)
-
-# Waiting time plot (after tau)
-
-fig8 = plt.figure(8)
-fig8.set_size_inches(18.5, 10.5)
-fig8.set_alpha(0)
-fig8.set_facecolor("none")
-ax8 = plt.axes()
-ax8.spines['top'].set_visible(False)
-ax8.spines['right'].set_visible(False)
-ax8.spines['left'].set_color(colours.spanish_gray)
-ax8.spines['bottom'].set_color(colours.spanish_gray)
-ax8.tick_params(axis='x', colors=colours.spanish_gray)
-ax8.tick_params(axis='y', colors=colours.spanish_gray)
-ax8.xaxis.label.set_color(colours.spanish_gray)
-ax8.yaxis.label.set_color(colours.spanish_gray)
-
-plt.bar(waiting_data[:,0][21:-1], waiting_data_norm[21:-1], width=0.02, color=colours.greek_blue)
-plt.xlabel("Waiting Time (seconds)")
-plt.ylabel("Frequency (Normalised)")
-plt.savefig(directory + "waiting_time_more.pdf", facecolor=fig1.get_facecolor(), transparent=True, dpi=600)
