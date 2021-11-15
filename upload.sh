@@ -1,6 +1,6 @@
 #!/bin/bash
 
-destination="Omega_10_tau_02_phi_pi"
+destination="Omega_10_tau_01_phi_0"
 
 send_up () {
     scp -r template/$1 mahuika:/nesi/project/uoa03404/work/$destination/$1

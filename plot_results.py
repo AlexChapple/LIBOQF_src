@@ -7,10 +7,10 @@ import matplotlib
 import colours
 
 # Variables 
-directory = "results/Omega_10_tau_02_phi_pi/"
-photon_bin_cut_off = 36
-end_time = 100
-tau = 0.2
+directory = "results/Omega_10_tau_01_phi_0/"
+photon_bin_cut_off = 50
+end_time = 7
+tau = 0.1
 num_of_simulations = 100000
 
 delimiter = ","

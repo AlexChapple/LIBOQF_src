@@ -20,17 +20,17 @@ program main
     ! Declare general variables and parameters
     real (kind=8) :: start_time = 0.0d0 
     integer (kind=8), parameter :: N = 20d0 
-    integer (kind=8), parameter :: end_time = 100d0 
-    integer (kind=8), parameter :: time_steps = 50000d0 
-    integer (kind=8), parameter :: num_of_simulations = 20d0
-    real (kind=8), parameter :: pi = 3.14159265358979323846d0 
-    real (kind=8), parameter :: phase = pi !0.0d0
+    integer (kind=8), parameter :: end_time = 7d0 
+    integer (kind=8), parameter :: time_steps = 7000d0  
+    integer (kind=8), parameter :: num_of_simulations = 2000d0
+    real (kind=8), parameter :: pi = 3.14159265358979323846d0
+    real (kind=8), parameter :: phase = 0.0d0
     real (kind=8), parameter :: gammaL = 0.5d0 
     real (kind=8), parameter :: gammaR = 0.5d0
     real (kind=8), parameter :: Omega = 10.0d0 * pi 
-    real (kind=8), parameter :: dt = 0.002d0 
+    real (kind=8), parameter :: dt = 0.001d0 
     integer (kind=8), parameter :: period = 5d0 
-    real (kind=8), parameter :: tau = 0.2d0 
+    real (kind=8), parameter :: tau = 0.1d0 
     real (kind=8) :: total
     integer (kind=8) :: sim, index, q, j, k, beginning, end, rate, log_line, index1, index2
     real (kind=8), dimension(time_steps) :: time_list, rand_list

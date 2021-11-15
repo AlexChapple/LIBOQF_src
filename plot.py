@@ -28,10 +28,9 @@ if local == False:
     delimeter = ","
 elif local == True and Large == False:
     directory = "./"
-    spin_down_file = "spin_down_e.txt"
-    spin_up_file = "spin_up_e.txt"
-    photon_counting_file = "photon_counting_e.txt"
-    waiting_time_file = "waiting_time_e.txt"
+    spin_down_file = "spin_down.txt"
+    spin_up_file = "spin_up.txt"
+    photon_counting_file = "photon_counting.txt"
     delimeter = None 
 elif local == True and Large == True:
     directory = "./"
@@ -45,7 +44,6 @@ elif local == True and Large == True:
 spin_down_data = np.loadtxt(directory + spin_down_file, delimiter=delimeter)
 spin_up_data = np.loadtxt(directory + spin_up_file, delimiter=delimeter)
 photon_data = np.loadtxt(directory + photon_counting_file)
-waiting_data = np.loadtxt(directory + waiting_time_file, delimiter=delimeter)
 
 matplotlib.rcParams.update({'font.size': 22})
 
@@ -81,68 +79,3 @@ plt.xticks(np.arange(0, photon_bin_cut_off, 1))
 plt.xlabel("Photon Number")
 plt.ylabel("frequency")
 plt.savefig("photon_counting.pdf", dpi=600)
-
-### Waiting time distribution plots 
-waiting_time = waiting_data[:,0]
-waiting_data = waiting_data[:,1]
-fig4 = plt.figure(4)
-fig4.set_size_inches(18.5, 10.5)
-plt.bar(waiting_time, waiting_data, width=0.1, color=colours.french_violet)
-plt.xlabel("waiting time")
-plt.ylabel("frequency")
-plt.title("Total waiting time distribution")
-plt.savefig("waiting_time.pdf", dpi=600)
-
-# Take information before tau 
-waiting_time_f = waiting_time[0:20]
-waiting_data_f = waiting_data[0:20]
-
-fig5 = plt.figure(5)
-fig5.set_size_inches(18.5, 10.5)
-plt.bar(waiting_time_f, waiting_data_f, width=0.005)
-plt.xlabel("waiting time")
-plt.ylabel("frequency")
-plt.title("waiting time distribution under $\\tau = 0.2$")
-plt.savefig("waiting_time_before.pdf", dpi=600)
-
-# Take information after tau 
-waiting_time_l = waiting_time[21:-1]
-waiting_data_l = waiting_data[21:-1]
-
-reduced_waiting_time_l = np.linspace(tau, end_time, waiting_bar_count)
-reduced_waiting_data_l = np.zeros(waiting_bar_count)
-increment = (end_time - tau) / waiting_bar_count
-
-for i in range(len(waiting_time_l)):
-
-    val = waiting_time_l[i] - tau 
-    c = floor(val/increment)
-
-    reduced_waiting_data_l[c] += waiting_data_l[i]
-
-fig6 = plt.figure(6)
-fig6.set_size_inches(18.5, 10.5)
-plt.bar(reduced_waiting_time_l, reduced_waiting_data_l, width=0.5)
-plt.xlabel("waiting time")
-plt.ylabel("frequency")
-plt.title("waiting time distribution after tau")
-plt.savefig("waiting_time_after1.pdf", dpi=600)
-
-# Takes information after tau but doesn't bin them into smaller bins 
-fig7 = plt.figure(7)
-fig7.set_size_inches(18.5, 10.5)
-plt.bar(waiting_time_l, waiting_data_l, width=0.15)
-plt.xlabel("waiting time")
-plt.ylabel("frequency")
-plt.title("waiting time distribution after $\\tau = 0.2$")
-plt.savefig("waiting_time_after2.pdf", dpi=600)
-
-# Show all plots 
-
-
-# EXPERIMENTNAL: prints total emission count 
-total = 0 
-for i in range(len(photon_data)):
-    total += photon_data[i]*i
-
-print("photon emission count = ", total)
