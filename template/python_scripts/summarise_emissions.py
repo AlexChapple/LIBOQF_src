@@ -10,7 +10,7 @@ for i in range(num_of_dir):
 
     working_dir = "data/" + str(i) + "/"
 
-    emission_data = np.loadtxt(working_dir + "emission_tracking_N80.txt")
+    emission_data = np.loadtxt(working_dir + "emission_tracking.txt")
 
     if initialised == False:
 

@@ -11,14 +11,14 @@ import matplotlib
 import colours
 
 # Variables 
-directory = "results/Omega_10_tau_01_phi_0/"
+directory = "results/Omega_10_tau_02_phi_pi/"
 photon_bin_cut_off = 25 
 end_time = 100
 tau = 0.2
 waiting_bar_count = 25 
 
 # If plotting test files in direct directory set true 
-local = False
+local = True
 Large = False
 if local == False:
     spin_down_file = "spin_down_total.txt"

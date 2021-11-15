@@ -1,6 +1,6 @@
 #!/bin/bash -e
 echo $SLURM_ARRAY_TASK_ID
-DIRECTORY="N80"
+DIRECTORY="Omega_10_tau_02_phi_pi"
 cd /nesi/project/uoa03404/work/$DIRECTORY/data/$SLURM_ARRAY_TASK_ID
 pwd
 

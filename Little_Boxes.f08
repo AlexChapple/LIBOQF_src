@@ -6,7 +6,10 @@ program main
     ! ----------------------------------------------------------------------------------
     ! 
     ! This runs the simulation, and writes to separate files the spin statistics,
-    ! photon counting distribution, and more.  
+    ! photon counting distribution, and more. 
+    ! 
+    ! This file is specifically for large N ( >= 100)
+    ! Imcorporating tracking photon emission times now 
     !
     ! ----------------------------------------------------------------------------------
 
@@ -15,17 +18,17 @@ program main
     ! Declare general variables and parameters
     real (kind=8) :: start_time = 0.0d0 
     integer (kind=8), parameter :: N = 20d0 
-    integer (kind=8), parameter :: end_time = 7d0 
-    integer (kind=8), parameter :: time_steps = 7000d0 
+    integer (kind=8), parameter :: end_time = 100d0 
+    integer (kind=8), parameter :: time_steps = 50000d0 
     integer (kind=8), parameter :: num_of_simulations = 2000d0
     real (kind=8), parameter :: pi = 3.14159265358979323846d0 
-    real (kind=8), parameter :: phase = 0.0d0
+    real (kind=8), parameter :: phase = pi !0.0d0
     real (kind=8), parameter :: gammaL = 0.5d0 
     real (kind=8), parameter :: gammaR = 0.5d0
     real (kind=8), parameter :: Omega = 10.0d0 * pi 
-    real (kind=8), parameter :: dt = 0.001d0 
+    real (kind=8), parameter :: dt = 0.002d0 
     integer (kind=8), parameter :: period = 5d0 
-    real (kind=8), parameter :: tau = 0.1d0 
+    real (kind=8), parameter :: tau = 0.2d0 
     real (kind=8) :: total
     integer (kind=8) :: sim, index, q, j, k, beginning, end, rate, log_line 
     real (kind=8), dimension(time_steps) :: time_list, rand_list
@@ -42,18 +45,23 @@ program main
     real (kind=8) :: psi_0, psi_1, prob, rand_num, spin_up_prob, spin_down_prob, spin_total ! spin_total is just the total probability of spin up and down for normalisation purposes 
 
     ! Photon counting parameters 
-    integer (kind=8) , parameter :: bin_width = 100d0 
+    integer (kind=8) , parameter :: bin_width = 200d0 
     integer (kind=8) :: photon_number
     integer (kind=8), dimension(bin_width) :: photon_list
 
     ! Waiting time variables 
-    real (kind=8), parameter :: waiting_bin_width = tau / 10.0d0
-    integer (kind=8), parameter :: waiting_time_step = 700 ! Needs to be manually calculated (end_time / waiting_bin_width)
+    real (kind=8), parameter :: waiting_bin_width = tau / 20.0d0
+    integer (kind=8), parameter :: waiting_time_step = 10000 ! Needs to be manually calculated (end_time / waiting_bin_width)
     real (kind=8) :: waiting_time, last_time_found
     integer (kind=8), dimension(waiting_time_step) :: waiting_time_list
     real (kind=8), dimension(waiting_time_step) :: reduced_time_list  
     integer (kind=8) :: first_photon, floored_multiple
     integer (kind=8), parameter :: print_to_console = 0
+
+    ! Emission tracking variables 
+    integer (kind=8) :: emission_index 
+    integer (kind=8), parameter :: tracking_bin_width = 500000
+    real (kind=8), dimension(tracking_bin_width) :: emission_tracking_list  
 
     ! -------------------------------------------------------------------
     !
@@ -74,6 +82,9 @@ program main
 
     ! Initialise log line 
     log_line = 0d0 
+
+    ! Initialise emission tracking line 
+    emission_index = 1d0 
 
     ! Program execution time tracking 
     call system_clock(beginning, rate)
@@ -284,6 +295,10 @@ program main
                         end if 
                         
                     end if 
+
+                    ! Photon emission tracking done here
+                    emission_tracking_list(emission_index) = time_list(index) ! Saves the emission time to the end of the list 
+                    emission_index = emission_index + 1 ! Increases the emission index for the next emission 
                 
                 else ! Photon not found 
                     
@@ -398,6 +413,7 @@ program main
 
         ! Prints simulation completeion to terminal 
         if (end_time >= 15) then 
+            ! print *, "photon count: ", photon_number
             print *, sim ,' simulations completed.'
         else
             if (mod(sim, 10) == 0) then 
@@ -416,6 +432,8 @@ program main
     open(2, file="spin_down.txt", status="replace")
     open(3, file="photon_counting.txt", status="replace")
     open(4, file="waiting_time.txt", status="replace")
+    open(5, file="emission_tracking.txt", status="replace")
+
     do index = 1,size(time_list)
         write(1,*) time_list(index), spin_up_list(index)
         write(2,*) time_list(index), spin_down_list(index)
@@ -429,7 +447,11 @@ program main
         write(4,*) reduced_time_list(index), waiting_time_list(index)
     end do 
 
-    close(1); close(2); close(3); close(4)
+    do index =1, (emission_index-1)
+        write(5,*) emission_tracking_list(index)
+    end do 
+
+    close(1); close(2); close(3); close(4); close(5)
     
     call system_clock(end)
 
