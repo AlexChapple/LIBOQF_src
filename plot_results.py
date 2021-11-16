@@ -8,7 +8,7 @@ import colours
 
 # Variables 
 directory = "results/N80/"
-photon_bin_cut_off = 100
+photon_bin_cut_off = 25
 end_time = 100
 tau = 0.2
 num_of_simulations = 100000
@@ -26,6 +26,7 @@ matplotlib.rcParams.update({'font.size': 24})
 
 # Spin down plots 
 time_list = spin_down_data[:,0]
+half_way_data = [0.5 for i in time_list]
 spin_down_data = spin_down_data[:,1]
 
 fig1 = plt.figure(1)
@@ -42,10 +43,12 @@ ax1.tick_params(axis='y', colors=colours.spanish_gray)
 ax1.xaxis.label.set_color(colours.spanish_gray)
 ax1.yaxis.label.set_color(colours.spanish_gray)
 
-plt.plot(time_list, spin_down_data, linewidth=3, c=colours.greek_blue)
+plt.plot(time_list, spin_down_data, linewidth=0.25, c=colours.greek_blue, label="Ground state")
+plt.plot(time_list, half_way_data, c="black", linestyle = 'dashed', label="Probability = 0.5")
 plt.grid()
 plt.xlabel("time (seconds)")
 plt.ylabel("Ground State Probability $P_{-}$")
+plt.legend()
 plt.savefig(directory+"ground_state.pdf", facecolor=fig1.get_facecolor(), transparent=True, dpi=600)
 
 # Spin up plots 
@@ -65,7 +68,8 @@ ax2.tick_params(axis='y', colors=colours.spanish_gray)
 ax2.xaxis.label.set_color(colours.spanish_gray)
 ax2.yaxis.label.set_color(colours.spanish_gray)
 
-plt.plot(time_list, spin_up_data, linewidth=3, c=colours.sizzling_red)
+plt.plot(time_list, spin_up_data, linewidth=0.25, c=colours.sizzling_red, label="Excited state")
+plt.plot(time_list, half_way_data, c="black", linestyle = 'dashed', label="Probability = 0.5")
 
 if single_trajectory == True:
 
@@ -82,13 +86,12 @@ if single_trajectory == True:
     #     arrowprops=dict(facecolor='black', shrink=0.05))
 
 plt.grid()
+plt.legend()
 plt.xlabel("time (seconds)")
 plt.ylabel("Excited State Probability $P_{+}$")
 plt.savefig(directory+"excited_state.pdf", facecolor=fig1.get_facecolor(), transparent=True, dpi=600)
 
 # Spin up and down on the same figure 
-
-half_way_data = [0.5 for i in time_list]
 
 fig3 = plt.figure(3)
 fig3.set_size_inches(18.5, 10.5)
@@ -104,9 +107,9 @@ ax3.tick_params(axis='y', colors=colours.spanish_gray)
 ax3.xaxis.label.set_color(colours.spanish_gray)
 ax3.yaxis.label.set_color(colours.spanish_gray)
 
-plt.plot(time_list, spin_down_data, linewidth=1.5, c=colours.greek_blue, label="Ground state")
-plt.plot(time_list, spin_up_data, linewidth=1.5, c=colours.sizzling_red, label="Excited state")
-plt.plot(time_list, half_way_data, c=colours.pumpkin, linestyle = 'dashed', label="Probability = 0.5")
+plt.plot(time_list, spin_down_data, linewidth=0.25, c=colours.greek_blue, label="Ground state")
+plt.plot(time_list, spin_up_data, linewidth=0.25, c=colours.sizzling_red, label="Excited state")
+plt.plot(time_list, half_way_data, c="black", linestyle = 'dashed', label="Probability = 0.5")
 plt.grid()
 plt.xlabel("time (seconds)")
 plt.ylabel("Probability")
