@@ -1,6 +1,6 @@
 #!/bin/bash
 
-source="Omega_10_tau_01_phi_0"
+source="N80"
 mkdir results/$source
 
 send_down () {

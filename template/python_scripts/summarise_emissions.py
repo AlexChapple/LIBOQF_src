@@ -2,7 +2,7 @@
 
 import numpy as np 
 
-num_of_dir = 50
+num_of_dir = 100
 initialised = False 
 total_emission_data = np.array([])
 
@@ -23,5 +23,5 @@ for i in range(num_of_dir):
 
     
 # Write to a total txt file 
-np.savetxt("emission_tracking_total.txt", total_emission_data, delimiter=",")
+np.savetxt("summary/emission_tracking_total.txt", total_emission_data, delimiter=",")
 

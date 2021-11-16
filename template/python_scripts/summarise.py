@@ -8,7 +8,7 @@ from shutil import copy2
 matplotlib.use('Agg')
 
 # Parameters
-num_of_dir = 50
+num_of_dir = 100
 
 initialised = 0
 input_file_copied = 0
