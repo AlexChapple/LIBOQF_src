@@ -7,13 +7,13 @@ import matplotlib.pyplot as plt
 import matplotlib
 import colours
 
-directory = "results/N80/"
+directory = "results/N80_phi_0/"
 num_of_simulations = 100000
 emission_data = np.loadtxt(directory + "emission_tracking_total.txt")
 
 # NOTE: This has to be changed each time you change the tracking file 
 tau = 0.2
-end_time = 100
+end_time = 7
 increment = 20  
 bin_width = tau / increment 
 

@@ -1,6 +1,6 @@
 #!/bin/bash
 
-source="N80"
+source="N80_phi_0"
 mkdir results/$source
 
 send_down () {

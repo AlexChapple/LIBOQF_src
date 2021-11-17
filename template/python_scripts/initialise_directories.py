@@ -4,7 +4,7 @@ import os
 from shutil import copy2
 
 # Number of directories wanted
-num_of_dirs = 100
+num_of_dirs = 50
 
 # Make data folder, that holds all the smaller directories 
 os.mkdir("data")

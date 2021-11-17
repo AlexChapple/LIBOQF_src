@@ -2,7 +2,7 @@
 
 import numpy as np 
 
-num_of_dir = 100
+num_of_dir = 50
 initialised = False 
 total_emission_data = np.array([])
 

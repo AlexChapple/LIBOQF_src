@@ -1,0 +1,12 @@
+ Number of Boxes:                    80
+ simulation duration:                     7
+ time steps:                  2800
+ number of simulations:                  2000
+ phase:    0.0000000000000000     
+ gammaL:   0.50000000000000000     
+ gammaR:   0.50000000000000000     
+ Omega:    31.4159260    
+ dt:    2.5000000000000001E-003
+ tau:   0.20000000000000001     
+ period:                     1
+ Delta t:    2.5000000000000001E-003

@@ -1,160 +1,102 @@
-"""
-Emission tracking 
-"""
-
 import numpy as np 
 import matplotlib.pyplot as plt 
-import colours 
-import matplotlib
+import colours
 
-emission_data = np.loadtxt("emission_tracking_total.txt")
+directory = "results/N80_phi_pi/"
+emission_data = np.loadtxt(directory + "emission_tracking_total.txt")
+
+# Testing emission data 
+# emission_data = [
+#     1,
+#     1.01,
+#     1.02,
+#     150,
+#     34,
+#     34.05,
+#     34.14,
+#     150,
+#     150,
+#     54,
+#     150,
+#     89,
+#     89.1
+# ]
 
 tau = 0.2 
-num_of_sim = 50000
+end_time = 100
+num_of_sim = 100000
 
-single_emission_count = 0 
-double_emission_count = 0
-triple_emission_count = 0 
-quadruple_emission_count = 0 
-quintuple_emission_count = 0 
+total_photon_numbers = 0 
 
-new_emission_session = True 
-session_start_time = 0 
-session_count = 0
+emission_count_list = [0 for i in range(7)]
+
+session_count = 0 
+session_start_time = None
+
+file_length = max(range(len(emission_data)))
 
 for index in range(len(emission_data)):
 
-    if index == 0:
+    if session_start_time == None and emission_data[index] != end_time + 50: # Initialises the very first emission, starts first session
 
-        session_count += 1 
-        session_start_time = emission_data[index]
+        session_start_time = emission_data[index] 
+        session_count = 1 
+        total_photon_numbers += 1
 
-    elif index == len(emission_data)-1:
+    elif session_start_time == None and emission_data[index] == end_time + 50:
 
-        session_count += 1 
+        pass 
 
-        if session_count == 1:
-            single_emission_count += 1 
-        elif session_count == 2:
-            double_emission_count += 1 
-        elif session_count == 3:
-            triple_emission_count += 1 
-        elif session_count == 4:
-            quadruple_emission_count += 1 
-        elif session_count == 5:
-            quintuple_emission_count += 1
+    else: # not the first emission 
+
+        if emission_data[index] == end_time + 50: # means a new simulation has begun, start new session
+
+            emission_count_list[session_count-1] += 1
+
+            session_count = 0
+            session_start_time = None 
+
         else:
-            print("error, too many session counts")
-    
-    else:
 
-        if emission_data[index] > emission_data[index-1]:
+            waiting_time = emission_data[index] - session_start_time # finds time between the current and previous emissions
 
-            if emission_data[index] - session_start_time <= tau:
-                session_count += 1 
-            
-            else:
-                # Means we've entered a new session in the same simulation 
+            if waiting_time <= tau: # within round trip time, then same session
 
-                if session_count == 1:
-                    single_emission_count += 1 
-                elif session_count == 2:
-                    double_emission_count += 1 
-                elif session_count == 3:
-                    triple_emission_count += 1 
-                elif session_count == 4:
-                    quadruple_emission_count += 1 
-                elif session_count == 5:
-                    quintuple_emission_count += 1
-                else:
-                    print("error, too many session counts")
+                session_count += 1
+                total_photon_numbers += 1 
 
+            else: # Not within the same session time
 
-                session_count = 1
+                emission_count_list[session_count-1] += 1
+
+                session_count =  1
                 session_start_time = emission_data[index]
+                total_photon_numbers += 1
 
-        else: # Means we've entered a new simulation 
-            
-            if session_count == 1:
-                single_emission_count += 1 
-            elif session_count == 2:
-                double_emission_count += 1 
-            elif session_count == 3:
-                triple_emission_count += 1 
-            elif session_count == 4:
-                quadruple_emission_count += 1 
-            elif session_count == 5:
-                quintuple_emission_count += 1
-            else:
-                print("error, too many session counts")
+    # if index == file_length: # checks if its the last index, if so, stores the current session count 
+
+    #     emission_count_list[session_count-1] += 1
+
+    if index % 1000 == 0:
+        print("indexed over " + str(index) + " simulations.")
+    
+
+x_list = range(len(emission_count_list))
 
 
-            session_count = 1
-            session_start_time = emission_data[index]    
-                
+print(total_photon_numbers)
 
-### Do some statistics here 
-print("Number of single emissions ", single_emission_count)
-print("Number of double emissions ", double_emission_count)
-print("Number of triple emissions ", triple_emission_count)
-print("Number of quadruple emissions ", quadruple_emission_count)
-print("Number of quintuple emissions ", quintuple_emission_count)
+total = 0 
+for i in range(len(emission_count_list)):
+    
+    total += ((i+1) * emission_count_list[i])
 
-total_emission_count = single_emission_count + double_emission_count + triple_emission_count + quadruple_emission_count + quintuple_emission_count
+print(total)
 
-prob_single = 100 * single_emission_count / total_emission_count
-prob_double = 100 * (double_emission_count) / total_emission_count
-prob_triple = 100 * ( triple_emission_count) / total_emission_count
-prob_quadruple = 100 * quadruple_emission_count / total_emission_count
-prob_quintuple = 100 * quintuple_emission_count / total_emission_count
+total_session_number = sum(emission_count_list)
 
-total_photon_count = single_emission_count + (2*double_emission_count) + (3*triple_emission_count) + (4*quadruple_emission_count) + (5*quintuple_emission_count)
+normalised_emission_count_list = [i / total_session_number for i in emission_count_list]
+plt.bar(x_list, normalised_emission_count_list)
+plt.show()
 
-print("Probability of single emission: ", prob_single)
-print("Probability of double emission: ", prob_double)
-print("Probability of triple emission: ", prob_triple)
-print("Probability of quadruple emission: ", prob_quadruple)
-print("Probability of quintuple emission: ", prob_quintuple)
-
-### Make plots 
-matplotlib.rcParams.update({'font.size': 18})
-fig = plt.figure(1)
-fig.set_size_inches(18.5, 10.5)
-ax = plt.axes()
-ax.spines['top'].set_visible(False)
-ax.spines['right'].set_visible(False)
-ax.spines['left'].set_color(colours.purple_new)
-ax.spines['bottom'].set_color(colours.purple_new)
-ax.tick_params(axis='x', colors=colours.spanish_gray)
-ax.tick_params(axis='y', colors=colours.spanish_gray)
-ax.xaxis.label.set_color(colours.spanish_gray)
-ax.yaxis.label.set_color(colours.spanish_gray)
-fig.set_alpha(0)
-fig.set_facecolor("none")
-plt.grid(alpha=0.25)
-bars1 = plt.bar(1,single_emission_count,width=0.5,color=colours.french_violet, label="Single emission")
-bars2 = plt.bar(2,double_emission_count,width=0.5,color=colours.pumpkin, label="Double emission")
-bars3 = plt.bar(3,triple_emission_count,width=0.5,color=colours.french_violet, label="Triple emission")
-bars4 = plt.bar(4,quadruple_emission_count,width=0.5,color=colours.french_violet, label="Quadruple emission")
-bars5 = plt.bar(5,quintuple_emission_count,width=0.5,color=colours.french_violet, label="Quintuple emission")
-
-# plt.bar([1,2,3], [single_emission_count, double_emission_count, triple_emission_count], width=0.5)
-
-yval1 = bars1[0].get_height()
-yval2 = bars2[0].get_height()
-yval3 = bars3[0].get_height()
-yval4 = bars4[0].get_height()
-
-plt.text(1, yval1+600, "Probability of single\nemission: " + str(round(prob_single, 3)) + "%", fontsize=13, horizontalalignment="center", c="black")
-plt.text(2, yval2+600, "Probability of double\nemission: " + str(round(prob_double, 3)) + "%", fontsize=13, horizontalalignment="center", c="black")
-plt.text(3, yval3+600, "Probability of triple\nemission: " + str(round(prob_triple, 3)) + "%", fontsize=13, horizontalalignment="center", c="black")
-plt.text(4, yval4+600, "Probability of quadruple\nemission: " + str(round(prob_quadruple, 3)) + "%", fontsize=13, horizontalalignment="center", c="black")
-plt.text(5, yval4+600, "Probability of quintuple\nemission: " + str(round(prob_quintuple, 3)) + "%", fontsize=13, horizontalalignment="center", c="black")
-
-plt.xlabel("Photon Emission")
-plt.ylabel("frequency")
-# plt.legend()
-plt.savefig("emission_tracking.pdf", dpi=600)
-
-print(total_photon_count)
-print("avg number of photons per simulation: ", total_photon_count/num_of_sim)
+print(normalised_emission_count_list)

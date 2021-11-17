@@ -7,9 +7,9 @@ import matplotlib
 import colours
 
 # Variables 
-directory = "results/N80/"
-photon_bin_cut_off = 25
-end_time = 100
+directory = "results/N80_phi_0/"
+photon_bin_cut_off = 35
+end_time = 7
 tau = 0.2
 num_of_simulations = 100000
 
@@ -43,7 +43,7 @@ ax1.tick_params(axis='y', colors=colours.spanish_gray)
 ax1.xaxis.label.set_color(colours.spanish_gray)
 ax1.yaxis.label.set_color(colours.spanish_gray)
 
-plt.plot(time_list, spin_down_data, linewidth=0.25, c=colours.greek_blue, label="Ground state")
+plt.plot(time_list, spin_down_data, linewidth=3, c=colours.greek_blue, label="Ground state")
 plt.plot(time_list, half_way_data, c="black", linestyle = 'dashed', label="Probability = 0.5")
 plt.grid()
 plt.xlabel("time (seconds)")
@@ -68,7 +68,7 @@ ax2.tick_params(axis='y', colors=colours.spanish_gray)
 ax2.xaxis.label.set_color(colours.spanish_gray)
 ax2.yaxis.label.set_color(colours.spanish_gray)
 
-plt.plot(time_list, spin_up_data, linewidth=0.25, c=colours.sizzling_red, label="Excited state")
+plt.plot(time_list, spin_up_data, linewidth=3, c=colours.sizzling_red, label="Excited state")
 plt.plot(time_list, half_way_data, c="black", linestyle = 'dashed', label="Probability = 0.5")
 
 if single_trajectory == True:
@@ -107,8 +107,8 @@ ax3.tick_params(axis='y', colors=colours.spanish_gray)
 ax3.xaxis.label.set_color(colours.spanish_gray)
 ax3.yaxis.label.set_color(colours.spanish_gray)
 
-plt.plot(time_list, spin_down_data, linewidth=0.25, c=colours.greek_blue, label="Ground state")
-plt.plot(time_list, spin_up_data, linewidth=0.25, c=colours.sizzling_red, label="Excited state")
+plt.plot(time_list, spin_down_data, linewidth=3, c=colours.greek_blue, label="Ground state")
+plt.plot(time_list, spin_up_data, linewidth=3, c=colours.sizzling_red, label="Excited state")
 plt.plot(time_list, half_way_data, c="black", linestyle = 'dashed', label="Probability = 0.5")
 plt.grid()
 plt.xlabel("time (seconds)")

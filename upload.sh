@@ -1,6 +1,6 @@
 #!/bin/bash
 
-destination="N80"
+destination="N80_phi_0"
 
 send_up () {
     scp -r template/$1 mahuika:/nesi/project/uoa03404/work/$destination/$1
