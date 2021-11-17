@@ -10,7 +10,7 @@ import colours
 import matplotlib
 
 # Import data 
-directory = "results/N80_phi_pi/"
+directory = "results/N80_phi_0/"
 emission_data = np.loadtxt(directory + "emission_tracking_total.txt")
 
 # Testing emission data 
@@ -142,7 +142,9 @@ for i in range(len(x_list)):
     yval = bar[0].get_height()
     emission_word = emission_word_find(x_list[i])
 
-    plt.text(x_list[i], yval+0.01, "Probability of " + emission_word + "\nemission: " + str(round(normalised_emission_count_list[i] * 100, 3)) + "%", fontsize=13, horizontalalignment="center", c="black")
+    # plt.text(x_list[i], yval+0.01, "Probability of " + emission_word + "\nemission: " + str(round(normalised_emission_count_list[i] * 100, 3)) + "%", fontsize=16, horizontalalignment="center", c="black")
+
+    plt.text(x_list[i], yval+0.01, str(round(normalised_emission_count_list[i] * 100, 3)) + "%", fontsize=20, horizontalalignment="center", c="black")
 
 plt.xlabel("Photon Emission")
 plt.ylabel("frequency")
