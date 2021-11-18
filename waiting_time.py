@@ -7,13 +7,13 @@ import matplotlib.pyplot as plt
 import matplotlib
 import colours
 
-directory = "results/N80_phi_0/"
+directory = "results/N80_phi_pi/"
 num_of_simulations = 100000
 emission_data = np.loadtxt(directory + "emission_tracking_total.txt")
 
 # NOTE: This has to be changed each time you change the tracking file 
 tau = 0.2
-end_time = 7
+end_time = 100
 increment = 20  
 bin_width = tau / increment 
 
@@ -74,8 +74,8 @@ ax1.yaxis.label.set_color(colours.spanish_gray)
 waiting_time_norm = [i / num_of_simulations for i in waiting_time_list]
 
 plt.bar(reduced_time_list, waiting_time_norm, width=0.01, color=colours.greek_blue)
-plt.xlabel("Waiting Time (seconds)")
-plt.ylabel("Frequency (Normalised)")
+plt.xlabel("Waiting time (seconds)")
+plt.ylabel("Frequency (normalised)")
 plt.savefig(directory + "waiting_time.pdf", facecolor=fig1.get_facecolor(), transparent=True, dpi=600)
 
 # Plots the waiting time distribution before tau 
@@ -94,8 +94,8 @@ ax2.xaxis.label.set_color(colours.spanish_gray)
 ax2.yaxis.label.set_color(colours.spanish_gray)
 
 plt.bar(reduced_time_list[0:increment + 2], waiting_time_norm[0:increment + 2], width=0.0075, color=colours.greek_blue)
-plt.xlabel("Waiting Time (seconds)")
-plt.ylabel("Frequency (Normalised)")
+plt.xlabel("Waiting time (seconds)")
+plt.ylabel("Frequency (normalised)")
 plt.savefig(directory + "waiting_time_before.pdf", facecolor=fig1.get_facecolor(), transparent=True, dpi=600)
 
 # Plots the waiting time distribution after tau 
@@ -114,7 +114,7 @@ ax3.xaxis.label.set_color(colours.spanish_gray)
 ax3.yaxis.label.set_color(colours.spanish_gray)
 
 plt.bar(reduced_time_list[increment + 2:-1], waiting_time_norm[increment + 2:-1], width=0.0075, color=colours.greek_blue)
-plt.xlabel("Waiting Time (seconds)")
-plt.ylabel("Frequency (Normalised)")
+plt.xlabel("Waiting time (seconds)")
+plt.ylabel("Frequency (normalised)")
 plt.savefig(directory + "waiting_time_after.pdf", facecolor=fig1.get_facecolor(), transparent=True, dpi=600)
 

@@ -7,8 +7,8 @@ import matplotlib
 import colours
 
 # Variables 
-directory = "results/N80_phi_0/"
-photon_bin_cut_off = 35
+directory = "results/N80_phi_pi/"
+photon_bin_cut_off = 25
 end_time = 7
 tau = 0.2
 num_of_simulations = 100000
@@ -161,10 +161,27 @@ ax5.yaxis.label.set_color(colours.spanish_gray)
 
 photon_data_norm = [i / num_of_simulations for i in photon_data]
 x_list = [i for i in range(len(photon_data_norm))]
-plt.bar(x_list, photon_data_norm, color=colours.greek_blue)
+
+odd_list = []
+odd_x_list = []
+even_list = []
+even_x_list = []
+
+for i in range(len(x_list)):
+    if i % 2 == 0:
+        even_list.append(photon_data_norm[i])
+        even_x_list.append(i)
+    else:
+        odd_list.append(photon_data_norm[i])
+        odd_x_list.append(i)
+
+# plt.bar(x_list, photon_data_norm, color=colours.greek_blue)
+plt.bar(even_x_list, even_list, color=colours.greek_red, label="even")
+plt.bar(odd_x_list, odd_list, color=colours.greek_blue, label="odd")
 plt.xticks(range(0,photon_bin_cut_off))
 plt.xticks(fontsize=17)
 plt.xlabel("Photon count")
-plt.ylabel("Frequency (Normalised)")
+plt.ylabel("Frequency (normalised)")
+plt.legend()
 plt.savefig(directory + "photon_counting.pdf", facecolor=fig1.get_facecolor(), transparent=True, dpi=600)
 

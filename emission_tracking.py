@@ -99,7 +99,7 @@ x_list = range(1,len(emission_count_list)+1)
 total_session_number = sum(emission_count_list)
 normalised_emission_count_list = [i / total_session_number for i in emission_count_list]
 
-matplotlib.rcParams.update({'font.size': 18})
+matplotlib.rcParams.update({'font.size': 22})
 fig = plt.figure()
 fig.set_size_inches(18.5, 10.5)
 fig.set_alpha(0)
@@ -146,6 +146,6 @@ for i in range(len(x_list)):
 
     plt.text(x_list[i], yval+0.01, str(round(normalised_emission_count_list[i] * 100, 3)) + "%", fontsize=20, horizontalalignment="center", c="black")
 
-plt.xlabel("Photon Emission")
-plt.ylabel("frequency")
+plt.xlabel("Photon emission")
+plt.ylabel("Frequency")
 plt.savefig(directory + "emission_tracking.pdf", facecolor=fig.get_facecolor(), transparent=True, dpi=600)
