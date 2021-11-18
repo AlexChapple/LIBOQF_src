@@ -6,7 +6,6 @@ import numpy as np
 import matplotlib.pyplot as plt 
 import matplotlib
 import colours
-from mpl_toolkits.axes_grid1.inset_locator import (inset_axes, InsetPosition, mark_inset)
 
 directory = "results/N80_phi_pi/"
 num_of_simulations = 100000
@@ -58,11 +57,11 @@ for emission in emission_data:
 matplotlib.rcParams.update({'font.size': 24})
 
 # Plots the total waiting time distribution 
-fig1, ax1 = plt.subplots()
+fig1 = plt.figure(1)
 fig1.set_size_inches(18.5, 10.5)
 fig1.set_alpha(0)
 fig1.set_facecolor("none")
-# ax1 = plt.axes()
+ax1 = plt.axes()
 ax1.spines['top'].set_visible(False)
 ax1.spines['right'].set_visible(False)
 ax1.spines['left'].set_color(colours.spanish_gray)
@@ -74,15 +73,17 @@ ax1.yaxis.label.set_color(colours.spanish_gray)
 
 waiting_time_norm = [i / num_of_simulations for i in waiting_time_list]
 
-ax1.bar(reduced_time_list, waiting_time_norm, width=0.01, color=colours.greek_blue)
-ax1.set_xlabel("Waiting time (seconds)")
-ax1.set_ylabel("Frequency (normalised)")
-ax1.text(6,0.255,"(a)", fontsize=22, horizontalalignment="center", c="black")
+plt.bar(reduced_time_list, waiting_time_norm, width=0.01, color=colours.greek_blue)
+plt.xlabel("Waiting time (seconds)")
+plt.ylabel("Frequency (normalised)")
+plt.savefig(directory + "waiting_time.pdf", facecolor=fig1.get_facecolor(), transparent=True, dpi=600)
 
-# Insert inset 
-ax2 = inset_axes(ax1, width="65%", height="65%", loc=1)
-ax2.bar(reduced_time_list[increment + 2:-1], waiting_time_norm[increment + 2:-1], width=0.0075, color=colours.greek_blue)
-ax2.text(90,0.00175,"(b)", fontsize=22, horizontalalignment="center", c="black")
+# Plots the waiting time distribution before tau 
+fig2 = plt.figure(2)
+fig2.set_size_inches(18.5, 10.5)
+fig2.set_alpha(0)
+fig2.set_facecolor("none")
+ax2 = plt.axes()
 ax2.spines['top'].set_visible(False)
 ax2.spines['right'].set_visible(False)
 ax2.spines['left'].set_color(colours.spanish_gray)
@@ -91,10 +92,13 @@ ax2.tick_params(axis='x', colors=colours.spanish_gray)
 ax2.tick_params(axis='y', colors=colours.spanish_gray)
 ax2.xaxis.label.set_color(colours.spanish_gray)
 ax2.yaxis.label.set_color(colours.spanish_gray)
-plt.xticks([0.2,20,40,60,80,100])
-plt.savefig(directory + "waiting_time.pdf", facecolor=fig1.get_facecolor(), transparent=True, dpi=600)
 
-# Plots the waiting time distribution before tau 
+plt.bar(reduced_time_list[0:increment + 2], waiting_time_norm[0:increment + 2], width=0.0075, color=colours.greek_blue)
+plt.xlabel("Waiting time (seconds)")
+plt.ylabel("Frequency (normalised)")
+plt.savefig(directory + "waiting_time_before.pdf", facecolor=fig1.get_facecolor(), transparent=True, dpi=600)
+
+# Plots the waiting time distribution after tau 
 fig3 = plt.figure(3)
 fig3.set_size_inches(18.5, 10.5)
 fig3.set_alpha(0)
@@ -109,28 +113,8 @@ ax3.tick_params(axis='y', colors=colours.spanish_gray)
 ax3.xaxis.label.set_color(colours.spanish_gray)
 ax3.yaxis.label.set_color(colours.spanish_gray)
 
-plt.bar(reduced_time_list[0:increment + 2], waiting_time_norm[0:increment + 2], width=0.0075, color=colours.greek_blue)
-plt.xlabel("Waiting Time (seconds)")
-plt.ylabel("Frequency (Normalised)")
-plt.savefig(directory + "waiting_time_before.pdf", facecolor=fig1.get_facecolor(), transparent=True, dpi=600)
-
-# Plots the waiting time distribution after tau 
-fig4 = plt.figure(4)
-fig4.set_size_inches(18.5, 10.5)
-fig4.set_alpha(0)
-fig4.set_facecolor("none")
-ax4 = plt.axes()
-ax4.spines['top'].set_visible(False)
-ax4.spines['right'].set_visible(False)
-ax4.spines['left'].set_color(colours.spanish_gray)
-ax4.spines['bottom'].set_color(colours.spanish_gray)
-ax4.tick_params(axis='x', colors=colours.spanish_gray)
-ax4.tick_params(axis='y', colors=colours.spanish_gray)
-ax4.xaxis.label.set_color(colours.spanish_gray)
-ax4.yaxis.label.set_color(colours.spanish_gray)
-
 plt.bar(reduced_time_list[increment + 2:-1], waiting_time_norm[increment + 2:-1], width=0.0075, color=colours.greek_blue)
-plt.xlabel("Waiting Time (seconds)")
-plt.ylabel("Frequency (Normalised)")
+plt.xlabel("Waiting time (seconds)")
+plt.ylabel("Frequency (normalised)")
 plt.savefig(directory + "waiting_time_after.pdf", facecolor=fig1.get_facecolor(), transparent=True, dpi=600)
 
