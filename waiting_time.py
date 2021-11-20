@@ -22,6 +22,8 @@ bin_width = tau / increment
 waiting_time_list = np.zeros(int(np.ceil(end_time/bin_width)))
 reduced_time_list = np.linspace(0,end_time,int(np.ceil(end_time/bin_width)))
 
+print(np.size(waiting_time_list))
+
 
 ### --- Sort the waiting time ------------------------------------------------------------------------------------------------ 
 

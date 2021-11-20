@@ -144,7 +144,6 @@ if single_trajectory == True:
     plt.savefig(directory + "emissions.pdf", facecolor=fig1.get_facecolor(), transparent=True, dpi=600)
 
 # Photon counting distribution plots 
-
 fig5 = plt.figure(5)
 fig5.set_size_inches(18.5, 10.5)
 fig5.set_alpha(0)
@@ -185,3 +184,28 @@ plt.ylabel("Frequency (normalised)")
 plt.legend()
 plt.savefig(directory + "photon_counting.pdf", facecolor=fig1.get_facecolor(), transparent=True, dpi=600)
 
+# Do photon statistics here 
+nbar = 0 
+for i in range(len(x_list)):
+
+    nbar += x_list[i] * photon_data_norm[i]
+
+variance = 0 
+for i in range(len(x_list)):
+
+    variance += ((x_list[i] - nbar)**2) * photon_data_norm[i]
+
+Mandel_Q = (variance - nbar)/ nbar 
+
+print("$\\overbar{n}$ = ", nbar)
+print("Q = ", Mandel_Q)
+
+# Add a poisson distribution curve onto the plot 
+poisson_list = []
+for k in x_list:
+
+    p = (nbar ** k) * np.exp(-nbar) / np.math.factorial(k)
+    poisson_list.append(p)
+
+plt.plot(x_list[0:photon_bin_cut_off], poisson_list[0:photon_bin_cut_off])
+plt.savefig(directory + "photon_counting_poisson.pdf", facecolor=fig5.get_facecolor(), transparent=True, dpi=600)
