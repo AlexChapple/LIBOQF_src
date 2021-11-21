@@ -8,7 +8,7 @@ import matplotlib
 import colours
 from mpl_toolkits.axes_grid1.inset_locator import (inset_axes, InsetPosition, mark_inset)
 
-directory = "results/N80_phi_pi/"
+directory = "results/Omega_10_tau_02_phi_pi/"
 num_of_simulations = 100000
 emission_data = np.loadtxt(directory + "emission_tracking_total.txt")
 

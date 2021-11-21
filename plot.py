@@ -207,5 +207,5 @@ for k in x_list:
     p = (nbar ** k) * np.exp(-nbar) / np.math.factorial(k)
     poisson_list.append(p)
 
-plt.plot(x_list[0:photon_bin_cut_off], poisson_list[0:photon_bin_cut_off])
+plt.plot(x_list[0:photon_bin_cut_off], poisson_list[0:photon_bin_cut_off], alpha=0.5)
 plt.savefig(directory + "photon_counting_poisson.pdf", facecolor=fig5.get_facecolor(), transparent=True, dpi=600)
