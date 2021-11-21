@@ -8,11 +8,12 @@ import matplotlib
 import colours
 from mpl_toolkits.axes_grid1.inset_locator import (inset_axes, InsetPosition, mark_inset)
 
-directory = "results/Omega_10_tau_02_phi_pi/"
+directory = "results/N80_phi_pi/"
 num_of_simulations = 100000
 emission_data = np.loadtxt(directory + "emission_tracking_total.txt")
 
 # NOTE: This has to be changed each time you change the tracking file 
+waiting_less = True 
 tau = 0.2
 end_time = 100
 increment = 20  
@@ -79,21 +80,26 @@ waiting_time_norm = [i / num_of_simulations for i in waiting_time_list]
 ax1.bar(reduced_time_list, waiting_time_norm, width=0.01, color=colours.greek_blue)
 ax1.set_xlabel("Waiting time (seconds)")
 ax1.set_ylabel("Frequency (normalised)")
-ax1.text(6,0.255,"(a)", fontsize=22, horizontalalignment="center", c="black")
+ax1.text(6,0.255,"(a)", fontsize=22, horizontalalignment="center", c="black", weight="bold")
 
 # Insert inset 
-ax2 = inset_axes(ax1, width="65%", height="65%", loc=1)
-ax2.bar(reduced_time_list[increment + 2:-1], waiting_time_norm[increment + 2:-1], width=0.0075, color=colours.greek_blue)
-ax2.text(90,0.00175,"(b)", fontsize=22, horizontalalignment="center", c="black")
-ax2.spines['top'].set_visible(False)
-ax2.spines['right'].set_visible(False)
-ax2.spines['left'].set_color(colours.spanish_gray)
-ax2.spines['bottom'].set_color(colours.spanish_gray)
-ax2.tick_params(axis='x', colors=colours.spanish_gray)
-ax2.tick_params(axis='y', colors=colours.spanish_gray)
-ax2.xaxis.label.set_color(colours.spanish_gray)
-ax2.yaxis.label.set_color(colours.spanish_gray)
-plt.xticks([0.2,20,40,60,80,100])
+if waiting_less == True: 
+    ax2 = inset_axes(ax1, width="65%", height="65%", loc=1)
+    ax2.bar(reduced_time_list[increment + 2:-1], waiting_time_norm[increment + 2:-1], width=0.0075, color=colours.greek_blue)
+    ax2.text(90,0.00175,"(b)", fontsize=22, horizontalalignment="center", c="black", weight="bold")
+    ax2.spines['top'].set_visible(False)
+    ax2.spines['right'].set_visible(False)
+    ax2.spines['left'].set_color(colours.spanish_gray)
+    ax2.spines['bottom'].set_color(colours.spanish_gray)
+    ax2.tick_params(axis='x', colors=colours.spanish_gray)
+    ax2.tick_params(axis='y', colors=colours.spanish_gray)
+    ax2.xaxis.label.set_color(colours.spanish_gray)
+    ax2.yaxis.label.set_color(colours.spanish_gray)
+    plt.xticks([0.2,20,40,60,80,100])
+
+if waiting_less == False and end_time == 7:
+    plt.xlim([0,5])
+
 plt.savefig(directory + "waiting_time.pdf", facecolor=fig1.get_facecolor(), transparent=True, dpi=600)
 
 # Plots the waiting time distribution before tau 
