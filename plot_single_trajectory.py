@@ -71,8 +71,8 @@ names = ["A", "B", "C"]
 for emissions in emission_data:
 
     plt.axvline(x = emissions, c=colours.sizzling_red, lw=3)
-    plt.text(x=emissions+0.075, y=0.95, fontsize=21, weight="bold", s=names.pop(0))
+    plt.text(x=emissions+0.075, y=0.95, fontsize=34, weight="bold", s=names.pop(0))
 
-plt.savefig(directory + "single_trajectory_emissions.pdf", dpi=600)
+plt.savefig(directory + "single_trajectory_emissions.pdf", dpi=600, bbox_inches='tight')
 
 
