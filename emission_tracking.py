@@ -11,6 +11,7 @@ import matplotlib
 
 # Import data 
 directory = "results/N80_phi_0/"
+# directory = ""
 emission_data = np.loadtxt(directory + "emission_tracking_total.txt")
 
 # Testing emission data 
@@ -149,3 +150,4 @@ for i in range(len(x_list)):
 plt.xlabel("Photon emission")
 plt.ylabel("Frequency")
 plt.savefig(directory + "emission_tracking.pdf", facecolor=fig.get_facecolor(), transparent=True, dpi=600)
+# plt.show()

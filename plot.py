@@ -88,7 +88,7 @@ if single_trajectory == True:
 plt.grid()
 plt.legend()
 plt.xlabel("time (seconds)")
-plt.ylabel("Excited State Probability $P_{+}$")
+plt.ylabel("Excited State Probability $P_{+}(t)$")
 plt.savefig(directory+"excited_state.pdf", facecolor=fig1.get_facecolor(), transparent=True, dpi=600)
 
 # Spin up and down on the same figure 

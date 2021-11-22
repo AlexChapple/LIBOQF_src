@@ -428,11 +428,11 @@ program main
     spin_down_list = spin_down_list / num_of_simulations
 
     !!! Write out final result to a txt file
-    open(1, file="results/single_tau_01/spin_up_total.txt", status="replace")
-    open(2, file="results/single_tau_01/spin_down_total.txt", status="replace")
-    open(3, file="results/single_tau_01/photon_counting_total.txt", status="replace")
-    open(4, file="results/single_tau_01/waiting_time_total.txt", status="replace")
-    open(5, file="results/single_tau_01/emission_tracking_total.txt", status="replace")
+    open(1, file="results/single_tau_01/spin_up.txt", status="replace")
+    open(2, file="results/single_tau_01/spin_down.txt", status="replace")
+    open(3, file="results/single_tau_01/photon_counting.txt", status="replace")
+    open(4, file="results/single_tau_01/waiting_time.txt", status="replace")
+    open(5, file="results/single_tau_01/emission_tracking.txt", status="replace")
 
     do index = 1,size(time_list)
         write(1,*) time_list(index), spin_up_list(index)
