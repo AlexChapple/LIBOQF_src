@@ -10,7 +10,7 @@ import colours
 import matplotlib
 
 # Import data 
-directory = "results/N80_phi_0/"
+directory = "results/Omega_10_tau_02_phi_pi/"
 # directory = ""
 emission_data = np.loadtxt(directory + "emission_tracking_total.txt")
 
@@ -116,7 +116,7 @@ ax.xaxis.label.set_color(colours.spanish_gray)
 ax.yaxis.label.set_color(colours.spanish_gray)
 fig.set_alpha(0)
 fig.set_facecolor("none")
-plt.grid(alpha=0.25)
+plt.grid(alpha=0.0)
 
 def emission_word_find(i):
 

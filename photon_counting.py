@@ -49,14 +49,15 @@ for i in range(len(x_list)):
         odd_x_list.append(i)
 
 # plt.bar(x_list, photon_data_norm, color=colours.greek_blue)
-plt.bar(even_x_list, even_list, color=colours.greek_red, label="even")
-plt.bar(odd_x_list, odd_list, color=colours.greek_blue, label="odd")
-plt.xticks(range(0,photon_bin_cut_off))
-plt.xticks(fontsize=17)
+# plt.bar(even_x_list, even_list, color=colours.greek_red, label="even")
+# plt.bar(odd_x_list, odd_list, color=colours.greek_blue, label="odd")
+plt.bar(x_list[0:photon_bin_cut_off], photon_data_norm[0:photon_bin_cut_off])
+# plt.xticks(range(0,photon_bin_cut_off))
+# plt.xticks(fontsize=17)
 plt.xlabel("Photon count")
 plt.ylabel("Frequency (normalised)")
 plt.legend()
-plt.savefig(directory + "photon_counting.pdf", facecolor=fig1.get_facecolor(), transparent=True, dpi=600)
+# plt.savefig(directory + "photon_counting.pdf", facecolor=fig1.get_facecolor(), transparent=True, dpi=600)
 
 
 # Do statistics here 
