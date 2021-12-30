@@ -18,7 +18,7 @@ waiting_less = True
 tau = 0.2
 end_time = 100
 increment = 20  
-bin_width = tau / increment 
+bin_width = tau / increment
 
 # Initialise arrays
 waiting_time_list = np.zeros(int(np.ceil(end_time/bin_width)))

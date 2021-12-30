@@ -37,8 +37,7 @@ program main
     complex (kind=8) :: lambdaL, lambdaR
     complex (kind=8), parameter :: i = cmplx(0.0d0,1.0d0) 
 
-    ! Spin parameters
-    
+    ! Spin parameters 
     real (kind=8), dimension(time_steps) :: spin_up_list, spin_down_list
     
     ! The coefficients (g for ground, u for up)
