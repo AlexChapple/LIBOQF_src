@@ -10,7 +10,7 @@ import colours
 import matplotlib
 
 # Import data 
-directory = "results/Omega_10_tau_02_phi_pi/"
+directory = "results/N80_phi_pi/"
 # directory = ""
 emission_data = np.loadtxt(directory + "emission_tracking_total.txt")
 
@@ -147,7 +147,7 @@ for i in range(len(x_list)):
 
     plt.text(x_list[i], yval+0.01, str(round(normalised_emission_count_list[i] * 100, 3)) + "%", fontsize=20, horizontalalignment="center", c="black")
 
-plt.xlabel("Photon emission")
+plt.xlabel("Number of emitted photons")
 plt.ylabel("Frequency")
 plt.savefig(directory + "emission_tracking.pdf", facecolor=fig.get_facecolor(), transparent=True, dpi=600)
 # plt.show()

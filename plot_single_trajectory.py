@@ -35,17 +35,17 @@ ax.yaxis.label.set_color(colours.spanish_gray)
 plt.plot(time_list, spin_up_data, linewidth=3, c=colours.sizzling_red)
 plt.grid()
 # plt.legend()
-plt.xlabel("time (seconds)")
+plt.xlabel("$\gamma t$")
 plt.ylabel("Excited State Probability $P_{+}(t)$")
 
 # Add text 
-ax.plot(0.757, 0.418, 'o', fillstyle='none', markersize=35, linewidth=10, c=colours.greek_blue)
-ax.text(0.7, 0.35, s="A", weight="bold", fontsize=19)
-ax.plot(1.55, 0.78, 'o', fillstyle='none', markersize=35, linewidth=10, c=colours.greek_blue)
-ax.text(1.52, 0.83, s="B", weight="bold", fontsize=19)
-ax.plot(4.152, 0.464, 'o', fillstyle='none', markersize=35, linewidth=10, c=colours.greek_blue)
-ax.text(4.1, 0.38, s="C", weight="bold", fontsize=19)
-
+ax.scatter(0.757, 0.418, marker='o', facecolor='none', linewidth=3, edgecolors=colours.greek_blue, s=500)
+# ax.text(0.7, 0.35, s="A", weight="bold", fontsize=19)
+ax.scatter(1.55, 0.78, marker='o', facecolor='none', linewidth=3, edgecolors=colours.greek_blue, s=500)
+# ax.text(1.52, 0.83, s="B", weight="bold", fontsize=19)
+ax.scatter(4.152, 0.464, marker='o', facecolor='none', linewidth=3, edgecolors=colours.greek_blue, s=500)
+# ax.text(4.1, 0.38, s="C", weight="bold", fontsize=19)
+plt.xlim([0,5])
 plt.savefig(directory + "single_trajectory_excited.pdf", dpi=600)
 
 ### ----- Plot single emission ----------------------------------
@@ -65,7 +65,8 @@ ax2.tick_params(axis='x', colors=colours.spanish_gray)
 ax2.tick_params(axis='y', colors="none")
 ax2.xaxis.label.set_color(colours.spanish_gray)
 ax2.yaxis.label.set_color("none")
-plt.xlabel("Time (seconds)")
+plt.xlabel("$\gamma t$")
+
 
 names = ["A", "B", "C"]
 for emissions in emission_data:

@@ -29,7 +29,12 @@ pastel_blue = "#a2d2ff"
 
 # Greek Colours 
 greek_blue = "#0081a7"
+greek_dark_blue = "#1d3557"
 greek_red = "#f07167"
+greek_dark_red = "#e63946"
 
 # Reds 
 sizzling_red = "#E94957"
+
+# Yellow 
+Gold_web_golden = "#ffd60a"

@@ -48,18 +48,6 @@ for i in range(len(x_list)):
         odd_list.append(photon_data_norm[i])
         odd_x_list.append(i)
 
-# plt.bar(x_list, photon_data_norm, color=colours.greek_blue)
-# plt.bar(even_x_list, even_list, color=colours.greek_red, label="even")
-# plt.bar(odd_x_list, odd_list, color=colours.greek_blue, label="odd")
-plt.bar(x_list[0:photon_bin_cut_off], photon_data_norm[0:photon_bin_cut_off])
-# plt.xticks(range(0,photon_bin_cut_off))
-# plt.xticks(fontsize=17)
-plt.xlabel("Photon count")
-plt.ylabel("Frequency (normalised)")
-plt.legend()
-# plt.savefig(directory + "photon_counting.pdf", facecolor=fig1.get_facecolor(), transparent=True, dpi=600)
-
-
 # Do statistics here 
 nbar = 0 
 for i in range(len(x_list)):
@@ -74,3 +62,29 @@ for i in range(len(x_list)):
 Mandel_Q = (variance - nbar)/ nbar 
 
 print(nbar, Mandel_Q)
+
+# Poissonian distribution here 
+Poisson_list = []
+for i in range(len(x_list[0:photon_bin_cut_off])):
+    
+    p = (nbar**i) * np.exp(-nbar) / np.math.factorial(i)
+    Poisson_list.append(p)
+
+
+# plt.bar(x_list, photon_data_norm, color=colours.greek_blue)
+
+# plt.bar(even_x_list, even_list, color=colours.greek_red, label="even")
+# plt.bar(odd_x_list, odd_list, color=colours.greek_blue, label="odd")
+# plt.bar(x_list[0:photon_bin_cut_off], photon_data_norm[0:photon_bin_cut_off], label="Photon counting distribution", color=colours.Gold_web_golden)
+# plt.bar(x_list[0:photon_bin_cut_off], Poisson_list, label="Poisson distribution", color=colours.greek_blue, alpha=0.4)
+plt.bar(x_list[0:photon_bin_cut_off], Poisson_list, label="Poisson distribution", color=colours.greek_red)
+plt.bar(x_list[0:photon_bin_cut_off], photon_data_norm[0:photon_bin_cut_off], label="Photon counting distribution", color=colours.greek_blue)
+# plt.xticks(range(0,photon_bin_cut_off))
+# plt.xticks(fontsize=17)
+# plt.xlim([0,25])
+plt.xlabel("Photon number")
+plt.ylabel("Probability")
+plt.legend()
+plt.savefig(directory + "photon_counting.pdf", facecolor=fig1.get_facecolor(), transparent=True, dpi=600)
+# plt.show()
+

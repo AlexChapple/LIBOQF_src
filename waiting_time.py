@@ -7,8 +7,9 @@ import matplotlib.pyplot as plt
 import matplotlib
 import colours
 from mpl_toolkits.axes_grid1.inset_locator import (inset_axes, InsetPosition, mark_inset)
+import cmath as cm 
 
-directory = "results/Omega_10_tau_02_phi_pi/"
+directory = "results/N80_phi_pi/"
 num_of_simulations = 100000
 emission_data = np.loadtxt(directory + "emission_tracking_total.txt")
 
@@ -31,6 +32,7 @@ print(np.size(waiting_time_list))
 last_time = None # Starts with none
 simulation_counter = 0 # Counts the number of simulation to make sure code is working, and hasn't skipped anything 
 new_sim = True
+waiting_time_counter = 0 
 
 for emission in emission_data:
 
@@ -54,7 +56,10 @@ for emission in emission_data:
             waiting_time_list[index] += 1 # Increases the histogram by one 
 
             last_time = emission # Updates the last time found for the next emission 
+            waiting_time_counter += 1
 
+waiting_time_norm = waiting_time_list / (waiting_time_counter / (np.size(reduced_time_list) / end_time))
+# waiting_time_norm /= max(waiting_time_norm)
 
 ### --- Plotting ------------------------------------------------------------------------------------------------------------
 
@@ -77,8 +82,8 @@ ax1.yaxis.label.set_color(colours.spanish_gray)
 
 waiting_time_norm = [i / num_of_simulations for i in waiting_time_list]
 
-ax1.bar(reduced_time_list, waiting_time_norm, width=0.05, color=colours.greek_blue)
-ax1.set_xlabel("Waiting time (seconds)")
+ax1.bar(reduced_time_list, waiting_time_norm, width=0.0065, color=colours.greek_blue)
+ax1.set_xlabel("Waiting Time ($\gamma^{-1}$)")
 ax1.set_ylabel("Probability")
 # ax1.text(6,0.255,"(a)", fontsize=22, horizontalalignment="center", c="black", weight="bold")
 ax1.text(6,0.25,"(a)", fontsize=22, horizontalalignment="center", c="black", weight="bold")
@@ -88,7 +93,7 @@ if waiting_less == True:
     ax2 = inset_axes(ax1, width="65%", height="65%", loc=1)
     ax2.bar(reduced_time_list[increment + 2:-1], waiting_time_norm[increment + 2:-1], width=0.0075, color=colours.greek_blue)
     # ax2.text(90,0.00175,"(b)", fontsize=22, horizontalalignment="center", c="black", weight="bold")
-    ax2.text(90,0.0027,"(b)", fontsize=22, horizontalalignment="center", c="black", weight="bold")
+    ax2.text(90,0.0018,"(b)", fontsize=22, horizontalalignment="center", c="black", weight="bold")
     ax2.spines['top'].set_visible(False)
     ax2.spines['right'].set_visible(False)
     ax2.spines['left'].set_color(colours.spanish_gray)
@@ -99,10 +104,27 @@ if waiting_less == True:
     ax2.yaxis.label.set_color(colours.spanish_gray)
     plt.xticks([0.2,20,40,60,80,100])
 
-if waiting_less == False and end_time == 7:
-    plt.xlim([0,5])
+# if waiting_less == False and end_time == 7:
+    # plt.xlim([0,5])
+
+    # Plots analytical result here 
+    # def waiting_analytical(Omega, t):
+
+    #     Y = np.sqrt(2) * Omega
+    #     delta_prime  = (1/2) * cm.sqrt(1 - 2*Y**2)
+
+    #     a = np.exp(-t/2) * (Y**2 / (2*Y**2 - 1)) * (1 - np.cosh(delta_prime * t))
+
+    #     return a 
+
+    # analytical_list = [waiting_analytical(10 * np.pi, t) for t in reduced_time_list]
+    # total = max(analytical_list)
+    # analytical_list = [i/total for i in analytical_list]
+
+    # ax1.plot(reduced_time_list, analytical_list, c="red")
 
 plt.savefig(directory + "waiting_time.pdf", facecolor=fig1.get_facecolor(), transparent=True, dpi=600, bbox_inches='tight')
+# plt.show()
 
 # Plots the waiting time distribution before tau 
 fig3 = plt.figure(3)
@@ -120,7 +142,7 @@ ax3.xaxis.label.set_color(colours.spanish_gray)
 ax3.yaxis.label.set_color(colours.spanish_gray)
 
 plt.bar(reduced_time_list[0:increment + 2], waiting_time_norm[0:increment + 2], width=0.0075, color=colours.greek_blue)
-plt.xlabel("Waiting Time (seconds)")
+plt.xlabel("Waiting Time ($\gamma^{-1}$)")
 plt.ylabel("Probability")
 plt.savefig(directory + "waiting_time_before.pdf", facecolor=fig1.get_facecolor(), transparent=True, dpi=600)
 
@@ -140,6 +162,6 @@ ax4.xaxis.label.set_color(colours.spanish_gray)
 ax4.yaxis.label.set_color(colours.spanish_gray)
 
 plt.bar(reduced_time_list[increment + 2:-1], waiting_time_norm[increment + 2:-1], width=0.0075, color=colours.greek_blue)
-plt.xlabel("Waiting Time (seconds)")
-plt.ylabel("Frequency (Normalised)")
+plt.xlabel("Waiting Time ($\gamma^{-1}$)")
+plt.ylabel("Probability")
 plt.savefig(directory + "waiting_time_after.pdf", facecolor=fig1.get_facecolor(), transparent=True, dpi=600)

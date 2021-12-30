@@ -7,7 +7,7 @@ import matplotlib
 import colours
 
 # Variables 
-directory = "results/N80_phi_pi/"
+directory = "results/N80_phi_0/"
 photon_bin_cut_off = 25
 end_time = 7
 tau = 0.2
@@ -46,7 +46,7 @@ ax1.yaxis.label.set_color(colours.spanish_gray)
 plt.plot(time_list, spin_down_data, linewidth=3, c=colours.greek_blue, label="Ground state")
 plt.plot(time_list, half_way_data, c="black", linestyle = 'dashed', label="Probability = 0.5")
 plt.grid()
-plt.xlabel("time (seconds)")
+plt.xlabel("$\gamma t$")
 plt.ylabel("Ground State Probability $P_{-}$")
 plt.legend()
 plt.savefig(directory+"ground_state.pdf", facecolor=fig1.get_facecolor(), transparent=True, dpi=600)
@@ -111,7 +111,7 @@ plt.plot(time_list, spin_down_data, linewidth=3, c=colours.greek_blue, label="Gr
 plt.plot(time_list, spin_up_data, linewidth=3, c=colours.sizzling_red, label="Excited state")
 plt.plot(time_list, half_way_data, c="black", linestyle = 'dashed', label="Probability = 0.5")
 plt.grid()
-plt.xlabel("time (seconds)")
+plt.xlabel("$\gamma t$")
 plt.ylabel("Probability")
 plt.legend()
 plt.savefig(directory + "probability.pdf", facecolor=fig1.get_facecolor(), transparent=True, dpi=600)
