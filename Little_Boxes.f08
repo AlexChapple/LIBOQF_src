@@ -18,7 +18,7 @@ program main
     implicit none 
 
     ! Declare general variables and parameters
-    real (kind=8) :: start_time = 0.0d0 
+    real (kind=8) :: start_time = 0.0d0  
     integer (kind=8), parameter :: N = 20d0 
     integer (kind=8), parameter :: end_time = 100d0 
     integer (kind=8), parameter :: time_steps = 50000d0  
@@ -47,7 +47,7 @@ program main
     real (kind=8) :: psi_0, psi_1, prob, rand_num, spin_up_prob, spin_down_prob, spin_total ! spin_total is just the total probability of spin up and down for normalisation purposes 
 
     ! Photon counting parameters 
-    integer (kind=8) , parameter :: bin_width = 200d0 
+    integer (kind=8), parameter :: bin_width = 200d0 
     integer (kind=8) :: photon_number
     integer (kind=8), dimension(bin_width) :: photon_list
 
