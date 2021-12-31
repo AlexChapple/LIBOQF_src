@@ -40,7 +40,7 @@ program main
     ! Spin parameters 
     real (kind=8), dimension(time_steps) :: spin_up_list, spin_down_list
     
-    ! The coefficients (g for ground, u for up)
+    ! The coefficients (g for ground, u for up) 
     complex (kind=8) :: g_0, g_0_new, e_0 ,e_0_new
     complex (kind=8), dimension(N) :: g_1, g_1_new, e_1, e_1_new 
     complex (kind=8), dimension(N,N) :: g_2, g_2_new, e_2 ,e_2_new 
