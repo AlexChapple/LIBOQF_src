@@ -19,7 +19,7 @@ program main
 
     ! Declare general variables and parameters
     real (kind=8) :: start_time = 0.0d0  
-    integer (kind=8), parameter :: N = 20d0 
+    integer (kind=8), parameter :: N = 100d0 
     integer (kind=8), parameter :: end_time = 100d0 
     integer (kind=8), parameter :: time_steps = 50000d0  
     integer (kind=8), parameter :: num_of_simulations = 100d0
@@ -29,13 +29,13 @@ program main
     real (kind=8), parameter :: gammaR = 0.5d0
     real (kind=8), parameter :: Omega = 10.0d0 * pi 
     real (kind=8), parameter :: dt = 0.002d0 
-    integer (kind=8), parameter :: period = 5d0 
+    integer (kind=8), parameter :: period = 1d0 
     real (kind=8), parameter :: tau = 0.2d0 
     real (kind=8) :: total
     integer (kind=8) :: sim, index, q, j, k, beginning, end, rate, log_line, index1, index2
     real (kind=8), dimension(time_steps) :: time_list, rand_list
     complex (kind=8) :: lambdaL, lambdaR
-    complex (kind=8), parameter :: i = cmplx(0.0d0,1.0d0) 
+    complex (kind=8), parameter :: i = cmplx(0.0d0,1.0d0,kind=8) 
 
     ! Spin parameters 
     real (kind=8), dimension(time_steps) :: spin_up_list, spin_down_list
@@ -83,8 +83,8 @@ program main
     call linspace(start=start_time, end=end_time, list=time_list) ! This makes the time list 
 
     ! Initialise lambdaL and lambdaR
-    lambdaL = exp(cmplx(0, phase / 2)) * sqrt(gammaL) * sqrt(N/tau)
-    lambdaR = exp(cmplx(0, -phase / 2)) * sqrt(gammaR) * sqrt(N/tau)
+    lambdaL = exp(cmplx(0, phase / 2, kind=8)) * sqrt(gammaL) * sqrt(N/tau)
+    lambdaR = exp(cmplx(0, -phase / 2, kind=8)) * sqrt(gammaR) * sqrt(N/tau)
 
 
     ! A do loop will go through and do the simulations here
@@ -378,10 +378,10 @@ program main
     spin_down_list = spin_down_list / num_of_simulations
 
     !!! Write out final result to a txt file
-    open(1, file="spin_up.txt", status="replace")
-    open(2, file="spin_down.txt", status="replace")
-    open(3, file="photon_counting.txt", status="replace")
-    open(4, file="emission_tracking.txt", status="replace")
+    open(1, file="results/spin_up.txt", status="replace")
+    open(2, file="results/spin_down.txt", status="replace")
+    open(3, file="results/photon_counting.txt", status="replace")
+    open(4, file="results/emission_tracking.txt", status="replace")
 
     ! Writes spin up and down lists 
     do index = 1,size(time_list)

@@ -1,4 +1,4 @@
- Number of Boxes:                    20
+ Number of Boxes:                   100
  simulation duration:                   100
  time steps:                 50000
  number of simulations:                   100
@@ -8,5 +8,5 @@
  Omega:    31.4159260    
  dt:    2.0000000000000000E-003
  tau:   0.20000000000000001     
- period:                     5
- Delta t:    1.0000000000000000E-002
+ period:                     1
+ Delta t:    2.0000000000000000E-003
