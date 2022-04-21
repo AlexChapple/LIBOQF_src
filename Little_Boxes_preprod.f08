@@ -1,5 +1,6 @@
 ! Simulation of the quantum system using quantum trajectories and the SDW model. 
-! This is the HEAD file. 
+! This is the pre production file, meaning all changes need to be copied over to the 
+! Little_Boxes.f08 to run on NeSI  
 ! 
 ! Author: Alex Chapple 
 
@@ -22,7 +23,7 @@ program main
     integer (kind=8), parameter :: N = 250d0 
     integer (kind=8), parameter :: end_time = 20d0 
     integer (kind=8), parameter :: time_steps = 6250d0  
-    integer (kind=8), parameter :: num_of_simulations = 250d0
+    integer (kind=8), parameter :: num_of_simulations = 50d0
     real (kind=8), parameter :: pi = 3.14159265358979323846d0
     real (kind=8), parameter :: phase = pi 
     real (kind=8), parameter :: gammaL = 0.5d0 
@@ -362,10 +363,10 @@ program main
     spin_down_list = spin_down_list / num_of_simulations
 
     !!! Write out final result to a txt file
-    open(1, file="spin_up.txt", status="replace")
-    open(2, file="spin_down.txt", status="replace")
-    open(3, file="photon_counting.txt", status="replace")
-    open(4, file="emission_tracking.txt", status="replace")
+    open(1, file="results_test2/tau_08/spin_up.txt", status="replace")
+    open(2, file="results_test2/tau_08/spin_down.txt", status="replace")
+    open(3, file="results_test2/tau_08/photon_counting.txt", status="replace")
+    open(4, file="results_test2/tau_08/emission_tracking.txt", status="replace")
 
     ! Writes spin up and down lists 
     do index = 1,size(time_list)
@@ -483,7 +484,7 @@ program main
         print *, "Delta t: ", tau / N 
 
         ! Also will write this to an input.txt file 
-        open(5, file="input.txt", status="replace")
+        open(5, file="results_test2/tau_08/input.txt", status="replace")
 
         write (5,*) "Number of Boxes: ", N 
         write (5,*) "simulation duration: ", end_time 

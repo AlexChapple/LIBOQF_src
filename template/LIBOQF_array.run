@@ -1,0 +1,12 @@
+#!/bin/bash -e
+#SBATCH --job-name=LIBOQF
+#SBATCH --time=02:30:00
+#SBATCH --account=uoa03404
+#SBATCH --mem-per-cpu=75
+#SBATCH --array=0-199
+#SBATCH --output=slurm_folder/slurm-%a.out
+
+module load gimkl/2020a
+which gfortran
+
+srun run_simulations.sh "${SLURM_ARRAY_TASK_ID}"
